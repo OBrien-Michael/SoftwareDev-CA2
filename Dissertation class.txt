@@ -1,0 +1,65 @@
+
+public class Dissertation {
+
+    // Attributes of a Dissertation
+    private String title;
+    private String author;
+    private String university;
+    private int year;
+    private String department;
+    private String advisor;
+    private String abstractText;
+    private String dissertationID; // Unique identifier for the dissertation
+
+    // Constructor
+    public Dissertation(String title, String author, String university, int year, 
+                        String department, String advisor, String abstractText, 
+                        String dissertationID) {
+        this.title = title;
+        this.author = author;
+        this.university = university;
+        this.year = year;
+        this.department = department;
+        this.advisor = advisor;
+        this.abstractText = abstractText;
+        this.dissertationID = dissertationID;
+    }
+
+    // Methods (behaviors) of a Dissertation
+
+    // Accessor methods (getters)
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    // ... Additional getters for other attributes ...
+
+    // Mutator methods (setters)
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    // ... Additional setters for other attributes ...
+
+    // Method to display a summary of the dissertation
+    public String getSummary() {
+        return title + " by " + author + ", " + university + " (" + year + ")";
+    }
+
+    // Method to search within the abstract text
+    public boolean searchAbstract(String keyword) {
+        return abstractText.contains(keyword);
+    }
+
+    // We can add more methods that are relevant to the dissertation,
+    // such as methods to manage citations,  
+    // to save or export the dissertation, etc.
+}
