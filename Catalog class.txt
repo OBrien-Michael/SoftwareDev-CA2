@@ -1,0 +1,60 @@
+
+import java.io.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Catalog {
+    private List<LibraryItem> items;
+    private final String filePath;
+
+    public Catalog(String filePath) {
+        this.filePath = filePath;
+        this.items = new ArrayList<>();
+        loadItemsFromCSV();
+    }
+
+    // Method to load items from CSV file
+    private void loadItemsFromCSV() {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                items.add(LibraryItem.fromCSV(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to save items to CSV file
+    public void saveItemsToCSV() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
+            for (LibraryItem item : items) {
+                pw.println(item.toCSV());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Add, remove, search, list, sort methods...
+
+    // Add item
+    public void addItem(String type, String title, String author, String dateAdded, String genre, boolean isAvailable) {
+        LibraryItem newItem = new LibraryItem(type, title, author, dateAdded, genre, isAvailable);
+        items.add(newItem);
+    }
+
+    // Search by title
+    public List<LibraryItem> searchByTitle(String title) {
+        return items.stream()
+                    .filter(item -> item.getTitle().toLowerCase().contains(title.toLowerCase()))
+                    .collect(Collectors.toList());
+    }
+
+    // Sort by title
+    public void sortByTitle() {
+        items.sort(Comparator.comparing(LibraryItem::getTitle));
+    }
+
+    // Other methods (remove, sort by other fields, etc.)
+}
