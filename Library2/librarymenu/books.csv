@@ -1,0 +1,10 @@
+ISBN         ,Author                             ,Title                         ,Is Borrowed  
+ISBN         ,Title                              ,Author                        ,No          
+1111         ,George Orwell                      ,1984                          ,No          
+2222         ,Tolkien                            ,The Lord of the Rings         ,Yes         
+3333         ,Harper Lee                         ,To Kill a Mockingbird         ,No          
+4444         ,Louisa May Alcott                  ,Little Women                  ,No          
+5555         ,Charles Dickens                    ,Great Expectations            ,No          
+6666         ,Herman Melville                    ,Moby Dick                     ,No          
+7777         ,Jane Austen                        ,Pride and Prejudice           ,No          
+8888         ,The Great Sailor                   ,Noah                          ,No          
