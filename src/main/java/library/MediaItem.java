@@ -15,15 +15,13 @@ public abstract class MediaItem extends LibraryItem{
     public MediaItem() {
     }
 
-    public MediaItem(String title, Author author, boolean availability, int playtime) {
-        super(title, author, availability);
+    public MediaItem(int libraryItemId,String title, int authorId, boolean availability, int playtime) {
+        super(libraryItemId, title, authorId, availability);
         this.playtime = playtime;
     }
 
     @Override
     public String toString() {
-        return "MediaItem{" +
-                "playtime=" + playtime +
-                "} " + super.toString();
+        return super.toString()+" playtime=" + playtime;
     }
 }

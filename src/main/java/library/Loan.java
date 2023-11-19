@@ -1,57 +1,64 @@
 package library;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class Loan implements Printable,Saveable,Comparable<Loan>{
 
-    private Member member;
-    private LibraryItem LibraryItem;
-    private Date dateBorrowed;
-    private Date dateReturned;
+    private LibraryUser libraryUser;
+    private LibraryItem libraryItem;
+    private LocalDate dateBorrowed;
+    private LocalDate dateReturned;
 
-    public Member getMember() {
-        return member;
+    public LibraryUser getMember() {
+        return libraryUser;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMember(LibraryUser libraryUser) {
+        this.libraryUser = libraryUser;
     }
 
-    public library.LibraryItem getLibraryItem() {
-        return LibraryItem;
+    public LibraryItem getLibraryItem() {
+        return libraryItem;
     }
 
-    public void setLibraryItem(library.LibraryItem libraryItem) {
-        LibraryItem = libraryItem;
+    public void setLibraryItem(LibraryItem libraryItem) {
+        this.libraryItem = libraryItem;
     }
 
-    public Date getDateBorrowed() {
+    public LocalDate getDateBorrowed() {
         return dateBorrowed;
     }
 
-    public void setDateBorrowed(Date dateBorrowed) {
+    public void setDateBorrowed(LocalDate dateBorrowed) {
         this.dateBorrowed = dateBorrowed;
     }
 
-    public Date getDateReturned() {
+    public LocalDate getDateReturned() {
         return dateReturned;
     }
 
-    public void setDateReturned(Date dateReturned) {
+    public void setDateReturned(LocalDate dateReturned) {
         this.dateReturned = dateReturned;
     }
 
     public Loan() {
     }
 
-    public Loan(Member member, library.LibraryItem libraryItem, Date dateBorrowed) {
-        this.member = member;
-        LibraryItem = libraryItem;
+    public Loan(LibraryUser libraryUser, library.LibraryItem libraryItem, LocalDate dateBorrowed) {
+        this.libraryUser = libraryUser;
+        this.libraryItem = libraryItem;
         this.dateBorrowed = dateBorrowed;
     }
 
-    public boolean returnItem(){
-        return false;
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "libraryUser=" + libraryUser +
+                ", libraryItem=" + libraryItem +
+                ", dateBorrowed=" + dateBorrowed +
+                ", dateReturned=" + dateReturned +
+                '}';
     }
 
 

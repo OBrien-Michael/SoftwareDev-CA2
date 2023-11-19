@@ -1,5 +1,6 @@
 package library;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Theses extends ResearchItem{
@@ -7,8 +8,13 @@ public class Theses extends ResearchItem{
     public Theses() {
     }
 
-    public Theses(String title, Author author, boolean availability, String topic, String abstractText, Date datePublished) {
-        super(title, author, availability, topic, abstractText, datePublished);
+    public Theses(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) {
+        super(libraryItemId, title, authorId, availability, topic, abstractText, datePublished);
+    }
+
+    @Override
+    public String toString() {
+        return "Theses: "+ super.toString()+"\n";
     }
 
     @Override

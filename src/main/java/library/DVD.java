@@ -5,13 +5,13 @@ public class DVD extends MediaItem{
     public DVD() {
     }
 
-    public DVD(String title, Author author, boolean availability, int playtime) {
-        super(title, author, availability, playtime);
+    public DVD(int libraryItemId, String title, int authorId, boolean availability, int playtime) {
+        super(libraryItemId, title, authorId, availability, playtime);
     }
 
     @Override
     public String toString() {
-        return "DVD{} " + super.toString();
+        return "DVD: " + super.toString()+"\n";
     }
 
     @Override

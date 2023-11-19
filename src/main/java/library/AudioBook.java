@@ -5,8 +5,13 @@ public class AudioBook extends LiteratureItem{
     public AudioBook() {
     }
 
-    public AudioBook(String title, Author author, boolean availability, String isbn) {
-        super(title, author, availability, isbn);
+    public AudioBook(int libraryItemId, String title, int authorId, boolean availability, String isbn) {
+        super(libraryItemId, title, authorId, availability, isbn);
+    }
+
+    @Override
+    public String toString() {
+        return "AudioBook: " + super.toString()+"\n";
     }
 
     @Override

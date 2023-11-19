@@ -2,9 +2,18 @@ package library;
 
 public abstract class LibraryItem implements Printable,Saveable,Comparable<LibraryItem>{
 
+    private int libraryItemId;
     private String title;
-    private Author author;
+    private int authorId;
     private boolean availability;
+
+    public int getLibraryItemId() {
+        return libraryItemId;
+    }
+
+    public void setLibraryItemId(int libraryItemId) {
+        this.libraryItemId = libraryItemId;
+    }
 
     public String getTitle() {
         return title;
@@ -14,15 +23,15 @@ public abstract class LibraryItem implements Printable,Saveable,Comparable<Libra
         this.title = title;
     }
 
-    public Author getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public boolean isAvailability() {
+    public boolean isAvailable() {
         return availability;
     }
 
@@ -33,19 +42,16 @@ public abstract class LibraryItem implements Printable,Saveable,Comparable<Libra
     public LibraryItem() {
     }
 
-    public LibraryItem(String title, Author author, boolean availability) {
+    public LibraryItem(int libraryItemId, String title, int authorId, boolean availability) {
+        this.libraryItemId = libraryItemId;
         this.title = title;
-        this.author = author;
+        this.authorId = authorId;
         this.availability = availability;
     }
 
     @Override
     public String toString() {
-        return "LibraryItem{" +
-                "title='" + title + '\'' +
-                ", author=" + author +
-                ", availability=" + availability +
-                '}';
+        return "Title=" + title + ", authorId=" + authorId + ", availability=" + availability+" ";
     }
 
 

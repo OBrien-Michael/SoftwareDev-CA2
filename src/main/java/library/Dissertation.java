@@ -1,16 +1,20 @@
 package library;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Dissertation extends ResearchItem{
 
     public Dissertation() {
     }
 
-    public Dissertation(String title, Author author, boolean availability, String topic, String abstractText, Date datePublished) {
-        super(title, author, availability, topic, abstractText, datePublished);
+    public Dissertation(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) {
+        super(libraryItemId, title, authorId, availability, topic, abstractText, datePublished);
     }
 
+    @Override
+    public String toString() {
+        return "Dissertation: " + super.toString()+"\n";
+    }
 
     @Override
     public int compareTo(LibraryItem o) {

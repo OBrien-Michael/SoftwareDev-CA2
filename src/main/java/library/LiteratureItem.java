@@ -15,16 +15,14 @@ public abstract class LiteratureItem extends LibraryItem{
     public LiteratureItem() {
     }
 
-    public LiteratureItem(String title, Author author, boolean availability, String isbn) {
-        super(title, author, availability);
+    public LiteratureItem(int libraryItemId, String title, int authorId, boolean availability, String isbn) {
+        super(libraryItemId, title, authorId, availability);
         this.isbn = isbn;
     }
 
     @Override
     public String toString() {
-        return "LiteratureItem{" +
-                "isbn='" + isbn + '\'' +
-                "} " + super.toString();
+        return super.toString()+"isbn=" + isbn;
     }
 
 

@@ -1,12 +1,12 @@
 package library;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class ResearchItem extends LibraryItem{
 
     private String topic;
     private String abstractText;
-    private Date datePublished;
+    private LocalDate datePublished;
 
     public String getTopic() {
         return topic;
@@ -24,19 +24,19 @@ public abstract class ResearchItem extends LibraryItem{
         this.abstractText = abstractText;
     }
 
-    public Date getDatePublished() {
+    public LocalDate getDatePublished() {
         return datePublished;
     }
 
-    public void setDatePublished(Date datePublished) {
+    public void setDatePublished(LocalDate datePublished) {
         this.datePublished = datePublished;
     }
 
     public ResearchItem() {
     }
 
-    public ResearchItem(String title, Author author, boolean availability, String topic, String abstractText, Date datePublished) {
-        super(title, author, availability);
+    public ResearchItem(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) {
+        super(libraryItemId, title, authorId, availability);
         this.topic = topic;
         this.abstractText = abstractText;
         this.datePublished = datePublished;
@@ -44,10 +44,6 @@ public abstract class ResearchItem extends LibraryItem{
 
     @Override
     public String toString() {
-        return "ResearchItem{" +
-                "topic='" + topic + '\'' +
-                ", abstractText='" + abstractText + '\'' +
-                ", datePublished=" + datePublished +
-                "} " + super.toString();
+        return super.toString()+"topic=" + topic + "abstractText=" + abstractText + "datePublished=" + datePublished;
     }
 }

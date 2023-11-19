@@ -5,13 +5,13 @@ public class CD extends MediaItem {
     public CD() {
     }
 
-    public CD(String title, Author author, boolean availability, int playtime) {
-        super(title, author, availability, playtime);
+    public CD(int libraryItemId, String title, int authorId, boolean availability, int playtime) {
+        super(libraryItemId, title, authorId, availability, playtime);
     }
 
     @Override
     public String toString() {
-        return "CD{} " + super.toString();
+        return "CD: " + super.toString()+"\n";
     }
 
     @Override

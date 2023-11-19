@@ -5,10 +5,14 @@ public class Book extends LiteratureItem{
     public Book() {
     }
 
-    public Book(String title, Author author, boolean availability, String isbn) {
-        super(title, author, availability, isbn);
+    public Book(int libraryItemId, String title, int authorId, boolean availability, String isbn) {
+        super(libraryItemId, title, authorId, availability, isbn);
     }
 
+    @Override
+    public String toString() {
+        return "Book: " + super.toString()+"\n";
+    }
 
     @Override
     public int compareTo(LibraryItem o) {
