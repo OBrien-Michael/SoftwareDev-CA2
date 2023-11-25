@@ -17,18 +17,19 @@ public class Dissertation extends ResearchItem{
     }
 
     @Override
-    public int compareTo(LibraryItem o) {
-        return 0;
+    public int compareTo(LibraryItem libraryItem) {
+        return this.getTitle().compareTo(libraryItem.getTitle());
     }
 
     @Override
     public void displayAllDetails() {
-
+        System.out.println("Dissertation: Item ID: "+this.getLibraryItemId()+", Title: "+this.getTitle()+" Author ID: "+this.getAuthorId()+", " +
+                "Available: "+this.getAvailability()+", Topic: "+this.getTopic()+", Abstract: "+this.getAbstractText()+", Date Published: "+this.getDatePublished());
     }
 
     @Override
     public void displaySummaryDetails() {
-
+        System.out.println("Dissertation: Item ID: "+this.getLibraryItemId()+", Title: "+this.getTitle()+", Available: "+this.getAvailability());
     }
 
     @Override

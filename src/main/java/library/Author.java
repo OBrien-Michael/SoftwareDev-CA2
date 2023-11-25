@@ -6,7 +6,7 @@ public class Author implements Printable,Saveable,Comparable<Author>{
 
     private int authorId;
     private String authorName;
-    private LinkedList<LibraryItem> authoredBooks;
+    private LinkedList<LibraryItem> authoredItems;
 
     public int getAuthorId() {
         return authorId;
@@ -24,26 +24,27 @@ public class Author implements Printable,Saveable,Comparable<Author>{
         this.authorName = authorName;
     }
 
-    public LinkedList<LibraryItem> getAuthoredBooks() {
-        return authoredBooks;
+    public LinkedList<LibraryItem> getAuthoredItems() {
+        return authoredItems;
     }
 
-    public void setAuthoredBooks(LinkedList<LibraryItem> authoredBooks) {
-        this.authoredBooks = authoredBooks;
+    public void setAuthoredItems(LinkedList<LibraryItem> authoredBooks) {
+        this.authoredItems = authoredBooks;
     }
 
     public Author() {
     }
 
-    public Author(int authorId, String authorName, LinkedList<LibraryItem> authoredBooks) {
+    public Author(int authorId, String authorName, LinkedList<LibraryItem> authoredItems) {
         this.authorId = authorId;
         this.authorName = authorName;
-        this.authoredBooks = authoredBooks;
+        this.authoredItems = authoredItems;
     }
 
     public Author(int authorId, String authorName) {
         this.authorId = authorId;
         this.authorName = authorName;
+        this.authoredItems = new LinkedList<>();
     }
 
     @Override
@@ -51,24 +52,36 @@ public class Author implements Printable,Saveable,Comparable<Author>{
         return "Author{" +
                 "authorId=" + authorId +
                 ", authorName='" + authorName + '\'' +
-                ", authoredBooks=" + authoredBooks +
+                ", authoredItems=" + authoredItems +
                 '}';
     }
 
 
     @Override
-    public int compareTo(Author o) {
-        return 0;
+    public int compareTo(Author author) {
+        return this.authorName.compareTo(author.getAuthorName());
     }
 
     @Override
     public void displayAllDetails() {
 
+        StringBuilder authoredItems = new StringBuilder();
+
+        if(!this.getAuthoredItems().isEmpty()) {
+            for (LibraryItem libraryItem:this.getAuthoredItems()) {
+                authoredItems.append(libraryItem.getTitle()).append(" | ");
+            }
+        }
+        else{
+            authoredItems = new StringBuilder("None");
+        }
+        System.out.println("Author ID: "+this.getAuthorId()+". Author Name: "+this.getAuthorName()+". Authored: "+authoredItems);
+
     }
 
     @Override
     public void displaySummaryDetails() {
-
+        System.out.println("Author ID: "+this.getAuthorId()+". Author Name: "+this.getAuthorName());
     }
 
     @Override

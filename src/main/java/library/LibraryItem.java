@@ -31,7 +31,7 @@ public abstract class LibraryItem implements Printable,Saveable,Comparable<Libra
         this.authorId = authorId;
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailability() {
         return availability;
     }
 
@@ -51,7 +51,7 @@ public abstract class LibraryItem implements Printable,Saveable,Comparable<Libra
 
     @Override
     public String toString() {
-        return "Title=" + title + ", authorId=" + authorId + ", availability=" + availability+" ";
+        return "Library Item ID = "+libraryItemId+", Title=" + title + ", authorId=" + authorId + ", availability=" + availability+" ";
     }
 
 

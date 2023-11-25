@@ -10,11 +10,11 @@ public class Loan implements Printable,Saveable,Comparable<Loan>{
     private LocalDate dateBorrowed;
     private LocalDate dateReturned;
 
-    public LibraryUser getMember() {
+    public LibraryUser getLibraryUser() {
         return libraryUser;
     }
 
-    public void setMember(LibraryUser libraryUser) {
+    public void setLibraryUser(LibraryUser libraryUser) {
         this.libraryUser = libraryUser;
     }
 

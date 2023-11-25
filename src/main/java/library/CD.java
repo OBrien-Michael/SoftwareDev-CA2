@@ -15,18 +15,18 @@ public class CD extends MediaItem {
     }
 
     @Override
-    public int compareTo(LibraryItem o) {
-        return 0;
+    public int compareTo(LibraryItem libraryItem) {
+        return this.getTitle().compareTo(libraryItem.getTitle());
     }
 
     @Override
     public void displayAllDetails() {
-
+        System.out.println("CD: Item ID: "+this.getLibraryItemId()+", Title: "+this.getTitle()+" Author ID: "+this.getAuthorId()+", Playtime: "+this.getPlaytime()+", Available: "+this.getAvailability());
     }
 
     @Override
     public void displaySummaryDetails() {
-
+        System.out.println("CD: Item ID: "+this.getLibraryItemId()+", Title: "+this.getTitle()+", Available: "+this.getAvailability());
     }
 
     @Override

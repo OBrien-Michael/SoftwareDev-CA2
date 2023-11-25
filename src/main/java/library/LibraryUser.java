@@ -65,19 +65,31 @@ public class LibraryUser implements Printable,Saveable,Comparable<LibraryUser>{
                 '}';
     }
 
+    //Comparing library users names
     @Override
-    public int compareTo(LibraryUser o) {
-        return 0;
+    public int compareTo(LibraryUser libraryUser) {
+        return this.getLibraryUserName().compareTo(libraryUser.getLibraryUserName());
     }
 
     @Override
     public void displayAllDetails() {
 
+        StringBuilder booksOnLoan = new StringBuilder();
+
+        if(!this.getBorrowedAssets().isEmpty()) {
+            for (LibraryItem libraryItem:this.getBorrowedAssets()) {
+                booksOnLoan.append(libraryItem.getTitle()).append(" | ");
+            }
+        }
+        else{
+            booksOnLoan = new StringBuilder("None");
+        }
+        System.out.println("User ID: "+this.getLibraryUserId()+". User Name: "+this.getLibraryUserName()+". Books on loan: "+booksOnLoan);
     }
 
     @Override
     public void displaySummaryDetails() {
-
+        System.out.println("User ID: "+this.getLibraryUserId()+". User Name: "+this.getLibraryUserName());
     }
 
     @Override

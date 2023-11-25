@@ -271,7 +271,7 @@ public class Catalogue {
                 for(LibraryItem libraryItem:libraryItemLinkedList){
                     if(libraryItem.getLibraryItemId() == libraryItemId){
                         //Check to see if the item is available
-                        if(libraryItem.isAvailable()){
+                        if(libraryItem.getAvailability()){
                             //Create the loan and add it to the linked list
                             this.getLoanLinkedList().add(new Loan(libraryUser,libraryItem,LocalDate.now()));
 
@@ -297,15 +297,136 @@ public class Catalogue {
         }
     }
 
-    //Return an item to the library
+    //Return an item to the library by its ID
     public void returnItemById(int libraryItemId){
 
-        //Check to see if Loan exists
-        for (Loan loan:loanLinkedList) {
-            if(loan.getLibraryItem().getLibraryItemId() == libraryItemId){
+        //Check to see if the item id exists
+        for (LibraryItem libraryItem:libraryItemLinkedList) {
+            if (libraryItem.getLibraryItemId() == libraryItemId) {
 
-                //this.getLoanLinkedList().
+                //Check to see if Loan exists
+                for (Loan loan : loanLinkedList) {
+                    if (loan.getLibraryItem().getLibraryItemId() == libraryItemId) {
 
+
+
+                        LibraryUser returningUser = loan.getLibraryUser();
+                        returningUser.returnBorrowedItem(libraryItem);
+
+                        libraryItem.setAvailability(true);
+
+                        this.getLibraryItemLinkedList().set(this.getLibraryItemLinkedList().indexOf(libraryItem),libraryItem);
+                        this.getLibraryUserLinkedList().set(this.getLibraryUserLinkedList().indexOf(returningUser),returningUser);
+
+
+                        System.out.println("Returned item: "+libraryItem.getTitle()+ " for "+returningUser.getLibraryUserName());
+
+                    } else {
+                        System.out.println("The item: "+ libraryItem.getLibraryItemId() +", "+ libraryItem.getTitle() + ", is not out on loan.");
+                    }
+                }
+            }
+        }
+    }
+
+    public void listAllLibraryItemsAllDetails(){
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                libraryItem.displayAllDetails();
+            }
+        }
+        else{
+            System.out.println("No items added to the catalogue.");
+        }
+    }
+
+    public void listAllLibraryItemsSummaryDetails(){
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                libraryItem.displaySummaryDetails();
+            }
+        }
+        else{
+            System.out.println("No items added to the catalogue.");
+        }
+    }
+
+    public void listAllLibraryUsersAllDetails(){
+        if(!this.getLibraryUserLinkedList().isEmpty()){
+            for (LibraryUser libraryUser: this.getLibraryUserLinkedList()){
+                libraryUser.displayAllDetails();
+            }
+        }
+        else{
+            System.out.println("No items added to the catalogue.");
+        }
+    }
+
+    public void listAllLibraryUsersSummaryDetails(){
+        if(!this.getLibraryUserLinkedList().isEmpty()){
+            for (LibraryUser libraryUser: this.getLibraryUserLinkedList()){
+                libraryUser.displaySummaryDetails();
+            }
+        }
+        else{
+            System.out.println("No users added to the library.");
+        }
+    }
+
+    public void listAllAuthorsAllDetails(){
+        if(!this.getAuthorLinkedList().isEmpty()){
+            for (Author author: this.getAuthorLinkedList()){
+                author.displayAllDetails();
+            }
+        }
+        else{
+            System.out.println("No authors added to the library.");
+        }
+    }
+
+    public void listAllAuthorsSummaryDetails(){
+        if(!this.getAuthorLinkedList().isEmpty()){
+            for (Author author: this.getAuthorLinkedList()){
+                author.displaySummaryDetails();
+            }
+        }
+        else{
+            System.out.println("No authors added to the library.");
+        }
+    }
+
+    public void listAllItemsByAuthorId(){
+        if(!this.getAuthorLinkedList().isEmpty()){
+            for (Author author: this.getAuthorLinkedList()){
+                author.displaySummaryDetails();
+            }
+        }
+        else{
+            System.out.println("No authors added to the library.");
+        }
+
+    }
+
+    public void listAllItemsByAuthorName(){
+
+    }
+
+    public void listAvailableItems(){
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability()){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+    }
+
+    public void listUnavailableItems(){
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(!libraryItem.getAvailability()){
+                    libraryItem.displayAllDetails();
+                }
             }
         }
     }
@@ -324,9 +445,25 @@ public class Catalogue {
     }
 
     public void loadCatalogue() {
+
+
     }
 
     public void saveCatalogue(){
+        for (LibraryUser libraryUser: libraryUserLinkedList){
+            libraryUser.saveToCSVFile();
+        }
 
+        for (LibraryItem libraryItem: libraryItemLinkedList){
+            libraryItem.saveToCSVFile();
+        }
+
+        for (Author author: authorLinkedList){
+            author.saveToCSVFile();
+        }
+
+        for (Loan loan: loanLinkedList){
+            loan.saveToCSVFile();
+        }
     }
 }

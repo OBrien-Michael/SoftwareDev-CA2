@@ -10,24 +10,20 @@ public class Book extends LiteratureItem{
     }
 
     @Override
-    public String toString() {
-        return "Book: " + super.toString()+"\n";
-    }
-
-    @Override
-    public int compareTo(LibraryItem o) {
-        return 0;
+    public int compareTo(LibraryItem libraryItem) {
+        return this.getTitle().compareTo(libraryItem.getTitle());
     }
 
     @Override
     public void displayAllDetails() {
-
+        System.out.println("Book: Item ID: "+this.getLibraryItemId()+", Title: "+this.getTitle()+" Author ID: "+this.getAuthorId()+", ISBN: "+this.getIsbn()+", Available: "+this.getAvailability());
     }
 
     @Override
     public void displaySummaryDetails() {
-
+        System.out.println("Book: Item ID: "+this.getLibraryItemId()+", Title: "+this.getTitle()+", Available: "+this.getAvailability());
     }
+
 
     @Override
     public boolean saveToCSVFile() {
