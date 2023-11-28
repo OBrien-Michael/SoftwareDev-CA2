@@ -143,6 +143,7 @@ public class LibraryCatalogueApp {
             case 7:
                 break;
             case 8:
+                //listUnavailableItems();
                 break;
             case 9:
                 return;
