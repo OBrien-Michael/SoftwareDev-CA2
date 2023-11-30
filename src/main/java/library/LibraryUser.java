@@ -1,5 +1,6 @@
 package library;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class LibraryUser implements Printable,Saveable,Comparable<LibraryUser>{
@@ -55,7 +56,6 @@ public class LibraryUser implements Printable,Saveable,Comparable<LibraryUser>{
         this.borrowedAssets.remove(libraryItem);
     }
 
-
     @Override
     public String toString() {
         return "LibraryUser{" +
@@ -93,7 +93,18 @@ public class LibraryUser implements Printable,Saveable,Comparable<LibraryUser>{
     }
 
     @Override
-    public boolean saveToCSVFile() {
-        return false;
+    public ArrayList<String> convertToCommaDelimitedArray() {
+        ArrayList<String> csvRecord = new ArrayList<>();
+
+        csvRecord.add(String.valueOf(this.getLibraryUserId()));
+        csvRecord.add(this.getLibraryUserName());
+
+        if (!this.getBorrowedAssets().isEmpty()){
+            for (LibraryItem libraryItem:this.getBorrowedAssets()){
+                csvRecord.add(String.valueOf(libraryItem.getLibraryItemId()));
+            }
+        }
+
+        return csvRecord;
     }
 }

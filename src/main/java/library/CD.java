@@ -1,5 +1,7 @@
 package library;
 
+import java.util.ArrayList;
+
 public class CD extends MediaItem {
 
     public CD() {
@@ -30,7 +32,16 @@ public class CD extends MediaItem {
     }
 
     @Override
-    public boolean saveToCSVFile() {
-        return false;
+    public ArrayList<String> convertToCommaDelimitedArray() {
+        ArrayList<String> csvRecord = new ArrayList<>();
+
+        csvRecord.add(String.valueOf(this.getLibraryItemId()));
+        csvRecord.add(this.getTitle());
+        csvRecord.add(String.valueOf(this.getAuthorId()));
+        csvRecord.add(String.valueOf(this.getPlaytime()));
+        csvRecord.add(String.valueOf(this.getAvailability()));
+
+
+        return csvRecord;
     }
 }

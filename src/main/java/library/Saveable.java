@@ -1,5 +1,7 @@
 package library;
 
+import java.util.ArrayList;
+
 public interface Saveable {
-    public boolean saveToCSVFile();
+    public ArrayList<String> convertToCommaDelimitedArray();
 }

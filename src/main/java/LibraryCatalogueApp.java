@@ -1,6 +1,7 @@
 import library.Catalogue;
 import library.LibraryUser;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -19,19 +20,32 @@ public class LibraryCatalogueApp {
         //libraryCatalogue.loadCatalogue();
 
         //Uncomment to generate some test data
-        testData();
+        //testData();
 
-        //appMainMenu();
+        appMainMenu();
     }
 
 
     //Main menu for the application
     private static void appMainMenu(){
         while (true) {
-            System.out.println("Choose an option:");
+
+            System.out.println("\nWelcome to the Library\n");
+
+            //System.out.println("Would you like to load data?");
+            //System.out.println("1. Yes");
+            //System.out.println("Any other number for no");
+            //int choice = Integer.parseInt(userInput.nextLine());
+            //if(choice == 1){
+            //    libraryCatalogue.loadCatalogue();
+            //}
+
+
+            System.out.println("Please choose an option:");
             System.out.println("1. Library User Menu");
             System.out.println("2. Librarian Menu");
-            System.out.println("3. Exit");
+            System.out.println("3. Save and Exit");
+            System.out.println("4. Exit");
 
             int choice = Integer.parseInt(userInput.nextLine());
             switch (choice) {
@@ -42,9 +56,15 @@ public class LibraryCatalogueApp {
                     appLibrarianMenu();
                     break;
                 case 3:
+
+                    libraryCatalogue.saveCatalogue();
+
                     System.out.println("Exiting Application.");
                     System.exit(0);
                     break;
+                case 4:
+                    System.out.println("Exiting Application.");
+                    System.exit(0);
                 default:
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -53,37 +73,38 @@ public class LibraryCatalogueApp {
     }
 
 
+    //Library User Menu
     private static void appLibraryUserMenu(){
         while (true) {
-            System.out.println("Member Menu:");
+            System.out.println("\nLibrary User Menu:");
             System.out.println("1. Open new Library User account");
             System.out.println("2. Display library items");
             System.out.println("3. Search for library item");
             System.out.println("4. Loan a library item");
-            System.out.println("5. Loan a library item");
-            System.out.println("6. Check library user account");
+            System.out.println("5. Return a library item");
+            System.out.println("6. Check library user details and overdue items");
             System.out.println("7. Return to main menu");
 
 
             int choice = Integer.parseInt(userInput.nextLine());
             switch (choice) {
                 case 1:
-                    createNewLibraryUser();
+                    createNewLibraryUserMenu();
                     break;
                 case 2:
                     displayLibraryItemsMenu();
                     break;
                 case 3:
-                    //searchForLibraryItemMenu();
+                    searchForLibraryItemMenu();
                     break;
                 case 4:
-
+                    loanItemMenu();
                     break;
                 case 5:
-
+                    returnItemMenu();
                     break;
                 case 6:
-
+                    checkLibraryUserMenu();
                     break;
                 case 7:
                     return;
@@ -95,9 +116,9 @@ public class LibraryCatalogueApp {
     }
 
     //Create a new Library User
-    private static void createNewLibraryUser(){
+    private static void createNewLibraryUserMenu(){
 
-        System.out.println("Please enter your name: ");
+        System.out.println("\nPlease enter your name: ");
 
         String userName = userInput.nextLine();
 
@@ -108,139 +129,387 @@ public class LibraryCatalogueApp {
     }
 
     private static void displayLibraryItemsMenu() {
-        System.out.println("Display:");
+        System.out.println("\nDisplay Items:");
         System.out.println("1. List all items");
-        System.out.println("2. List all available books");
-        System.out.println("3. List all available audiobooks");
-        System.out.println("4. List all available cds");
-        System.out.println("5. List all available dvds");
-        System.out.println("6. List all available theses");
-        System.out.println("7. List all available dissertations");
-        System.out.println("8. List all unavailable items");
-        System.out.println("9. Return to main menu.");
+        System.out.println("2. List all items summary");
+        System.out.println("3. List all available items");
+        System.out.println("4. List all available books");
+        System.out.println("5. List all available audiobooks");
+        System.out.println("6. List all available cds");
+        System.out.println("7. List all available dvds");
+        System.out.println("8. List all available theses");
+        System.out.println("9. List all available dissertations");
+        System.out.println("10. List all unavailable items");
+        System.out.println("11. Return to main menu.");
 
 
         int choice = Integer.parseInt(userInput.nextLine());
         switch (choice) {
             case 1:
-
+                libraryCatalogue.listAllLibraryItemsAllDetails();
                 break;
             case 2:
-
+                libraryCatalogue.listAllLibraryItemsSummaryDetails();
                 break;
             case 3:
-
+                libraryCatalogue.listAvailableItems();
                 break;
             case 4:
-
+                libraryCatalogue.listAvailableBooks();
                 break;
             case 5:
-
+                libraryCatalogue.listAvailableAudioBooks();
                 break;
             case 6:
-
+                libraryCatalogue.listAvailableCDs();
                 break;
             case 7:
+                libraryCatalogue.listAvailableDVDs();
                 break;
             case 8:
-                //listUnavailableItems();
+                libraryCatalogue.listAvailableTheses();
                 break;
             case 9:
+                libraryCatalogue.listAvailableDissertations();
+                break;
+            case 10:
+                libraryCatalogue.listUnavailableItems();
+                break;
+            case 11:
                 return;
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
     }
 
+    private static void loanItemMenu() {
+
+        System.out.println("\nCreate a new Loan:");
+
+        System.out.println("Please enter your Library User ID:");
+        int libraryUserId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the Item ID you would like to borrow:");
+        int libraryItemId = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.createNewLoanById(libraryUserId,libraryItemId);
+
+    }
+
+
+    private static void returnItemMenu() {
+
+        System.out.println("\nReturning an Item to the Library:");
+
+        System.out.println("Please enter the Item ID you would like to return:");
+        int libraryItemId = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.returnItemById(libraryItemId);
+    }
+
+    private static void searchForLibraryItemMenu() {
+        //TODO
+        System.out.println("Todo");
+    }
 
 
 
 
+    private static void checkLibraryUserMenu() {
+
+        System.out.println("\n:");
+
+        System.out.println("Please enter your Library User ID:");
+        int libraryUserId = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.checkLibraryUserDetailsById(libraryUserId);
 
 
+    }
 
+    //Librarian Menu
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private static void appLibrarianMenu(){
-        while(true) {
+    private static void appLibrarianMenu() {
+        while (true) {
             System.out.println("Librarian Menu:");
             System.out.println("1. Add new library user");
-            System.out.println("2. Remove member");
-            System.out.println("3. Add new library item");
-            System.out.println("4. Sort by title");
-            System.out.println("5. Sort by ISBN");
-            System.out.println("6. Sort by author");
-            System.out.println("7. Save data");
-            System.out.println("8. Read data");
-            System.out.println("9. Generate Borrowed Items Report");
-            System.out.println("10. Generate Overdue Report");
-            System.out.println("11. Return to main menu");
+            System.out.println("2. Delete a library user");
+            System.out.println("3. Add new author");
+            System.out.println("4. Delete an author");
+            System.out.println("5. Add new library item");
+            System.out.println("6. Delete a library item");
+            System.out.println("7. Display library items");
+            System.out.println("8. Search library items");
+            System.out.println("9. Search for items by author");
+            System.out.println("10. Save and Load functions");
+            System.out.println("11. Generate Borrowed Items Report");
+            System.out.println("12. Generate Overdue Items Report");
+            System.out.println("13. Return to main menu");
 
-            switch (userInput.nextInt()) {
+            int choice = Integer.parseInt(userInput.nextLine());
+            switch (choice) {
                 case 1:
-                    //addMember();
+                    createNewLibraryUserMenu();
                     break;
                 case 2:
-                    //removeMember();
+                    removeLibraryUserMenu();
                     break;
                 case 3:
-                    //addItem();
+                    addNewAuthorMenu();
                     break;
                 case 4:
-                    //removeItem();
+                    removeAuthorMenu();
                     break;
                 case 5:
-                    //addDissertation();
+                    addNewLibraryItemMenu();
                     break;
                 case 6:
-                    //removeDissertation();
+                    removeLibraryItemMenu();
                     break;
                 case 7:
-                    //sortByTitle();
+                    displayLibraryItemsMenu();
                     break;
                 case 8:
-                    //sortByISBN();
+                    searchForLibraryItemMenu();
                     break;
                 case 9:
-                    //sortByAuthor();
+                    searchForItemsByAuthorMenu();
                     break;
                 case 10:
-                    //saveData();
+                    saveAndLoadFunctionMenu();
                     break;
                 case 11:
-                    //readData();
+                    generateBorrowedItemsReportMenu();
                     break;
                 case 12:
-                    //System.out.println(library.generateBorrowedItemsReport());
+                    generateOverdueItemsReportMenu();
                     break;
                 case 13:
-                    //System.out.println(library.generateOverdueReport());
-                    break;
-                case 14:
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
     }
+
+    private static void removeLibraryUserMenu() {
+        System.out.println("\nPlease enter the Library Users Id you wish to remove: ");
+
+        int libraryUserId = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.removeLibraryUserById(libraryUserId);
+
+    }
+
+
+    private static void addNewAuthorMenu() {
+
+        System.out.println("\nPlease enter the Authors name you wish to add: ");
+
+        String authorName = userInput.nextLine();
+
+        libraryCatalogue.addNewAuthor(authorName);
+
+    }
+
+    private static void removeAuthorMenu() {
+        System.out.println("\nPlease enter the Authors Id you wish to remove: ");
+
+        int authorId = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.removeAuthorById(authorId);
+    }
+
+    private static void addNewLibraryItemMenu() {
+
+            System.out.println("Add new Library Item Menu:");
+            System.out.println("1. Add new Book");
+            System.out.println("2. Add new AudioBook");
+            System.out.println("3. Add new CD");
+            System.out.println("4. Add new DVD");
+            System.out.println("5. Add new Theses");
+            System.out.println("6. Add new Dissertation");
+            System.out.println("7. Return to Librarian Menu");
+
+
+        int choice = Integer.parseInt(userInput.nextLine());
+        switch (choice) {
+            case 1:
+                addNewBookMenu();
+                break;
+            case 2:
+                addNewAudioBookMenu();
+                break;
+            case 3:
+                addNewCDMenu();
+                break;
+            case 4:
+                addNewDVDMenu();
+                break;
+            case 5:
+                addNewThesesMenu();
+                break;
+            case 6:
+                addNewDissertationMenu();
+                break;
+            case 7:
+                return;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+
+
+    }
+
+    private static void addNewBookMenu() {
+
+        System.out.println("Please enter the Title of the Book:");
+        String bookTitle = userInput.nextLine();
+
+        System.out.println("Please enter the Authors Id:");
+        int bookAuthorId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the ISBN of the Book:");
+        String bookIsbn = userInput.nextLine();
+
+
+        libraryCatalogue.addNewBook(bookTitle,bookAuthorId,bookIsbn);
+    }
+
+    private static void addNewAudioBookMenu() {
+
+        System.out.println("Please enter the Title of the AudioBook:");
+        String audioBookTitle = userInput.nextLine();
+
+        System.out.println("Please enter the Authors Id:");
+        int audioBookAuthorId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the ISBN of the AudioBook:");
+        String audioBookIsbn = userInput.nextLine();
+
+
+        libraryCatalogue.addNewAudioBook(audioBookTitle,audioBookAuthorId,audioBookIsbn);
+    }
+
+    private static void addNewCDMenu() {
+
+        System.out.println("Please enter the Title of the CD:");
+        String cdTitle = userInput.nextLine();
+
+        System.out.println("Please enter the Authors Id:");
+        int cdAuthorId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the Playtime of the CD:");
+        int cdPlaytime = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.addNewCD(cdTitle,cdAuthorId,cdPlaytime);
+    }
+
+    private static void addNewDVDMenu() {
+
+        System.out.println("Please enter the Title of the DVD:");
+        String dvdTitle = userInput.nextLine();
+
+        System.out.println("Please enter the Authors Id:");
+        int dvdAuthorId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the Playtime of the DVD:");
+        int dvdPlaytime = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.addNewDVD(dvdTitle,dvdAuthorId,dvdPlaytime);
+    }
+
+    private static void addNewThesesMenu() {
+
+        System.out.println("Please enter the Title of the Theses:");
+        String thesesTitle = userInput.nextLine();
+
+        System.out.println("Please enter the Authors Id:");
+        int thesesAuthorId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the Topic of the Theses:");
+        String thesesTopic = userInput.nextLine();
+
+        System.out.println("Please enter the Abstract of the Theses:");
+        String thesesAbstractText = userInput.nextLine();
+
+        System.out.println("Please enter the Date the Theses was published:");
+        System.out.println("(DD/MM/YYYY)");
+        LocalDate thesesDatePublished = LocalDate.parse(userInput.nextLine(),dateFormatter);
+
+        libraryCatalogue.addNewTheses(thesesTitle,thesesAuthorId,thesesTopic,thesesAbstractText,thesesDatePublished);
+    }
+
+    private static void addNewDissertationMenu() {
+
+        System.out.println("Please enter the Title of the Dissertation:");
+        String dissertationTitle = userInput.nextLine();
+
+        System.out.println("Please enter the Authors Id:");
+        int dissertationAuthorId = Integer.parseInt(userInput.nextLine());
+
+        System.out.println("Please enter the Topic of the Dissertation:");
+        String dissertationTopic = userInput.nextLine();
+
+        System.out.println("Please enter the Abstract of the Dissertation:");
+        String dissertationAbstractText = userInput.nextLine();
+
+        System.out.println("Please enter the Date the Dissertation was published:");
+        System.out.println("(DD/MM/YYYY)");
+        LocalDate dissertationDatePublished = LocalDate.parse(userInput.nextLine(),dateFormatter);
+
+
+        libraryCatalogue.addNewDissertation(dissertationTitle,dissertationAuthorId,dissertationTopic,dissertationAbstractText,dissertationDatePublished);
+    }
+
+
+    private static void removeLibraryItemMenu() {
+        System.out.println("\nPlease enter the Library Items Id you wish to remove: ");
+
+        int libraryItemId = Integer.parseInt(userInput.nextLine());
+
+        libraryCatalogue.removeLibraryItemById(libraryItemId);
+    }
+
+    private static void searchForItemsByAuthorMenu() {
+        //TODO
+        System.out.println("TODO");
+    }
+
+    private static void saveAndLoadFunctionMenu() {
+
+        System.out.println("\nWould you like to Save or Load the catalogue?");
+        System.out.println("1. Save Catalogue");
+        System.out.println("2. Load Catalogue");
+        System.out.println("3. Return to Librarian Menu");
+
+        int choice = Integer.parseInt(userInput.nextLine());
+        switch (choice) {
+            case 1:
+                libraryCatalogue.saveCatalogue();
+                break;
+            case 2:
+                libraryCatalogue.loadCatalogue();
+                break;
+            case 3:
+                return;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    private static void generateBorrowedItemsReportMenu() {
+
+        libraryCatalogue.generateBorrowedItemsReport();
+
+    }
+
+    private static void generateOverdueItemsReportMenu() {
+
+        libraryCatalogue.generateOverdueItemsReport();
+
+    }
+
 
 
 
@@ -303,12 +572,12 @@ public class LibraryCatalogueApp {
         libraryCatalogue.addNewLibraryUser("Jim");
         libraryCatalogue.addNewLibraryUser("John");
 
-        libraryCatalogue.addNewLoanById(1,2);
-        libraryCatalogue.addNewLoanById(1,2);
-        libraryCatalogue.addNewLoanById(0,0);
-        libraryCatalogue.addNewLoanById(1,3);
-        libraryCatalogue.addNewLoanById(1,4);
-        libraryCatalogue.addNewLoanById(1,5);
+        libraryCatalogue.createNewLoanById(1,2);
+        libraryCatalogue.createNewLoanById(1,2);
+        libraryCatalogue.createNewLoanById(0,0);
+        libraryCatalogue.createNewLoanById(1,3);
+        libraryCatalogue.createNewLoanById(1,4);
+        libraryCatalogue.createNewLoanById(1,5);
 
         libraryCatalogue.returnItemById(0);
         libraryCatalogue.returnItemById(1);
@@ -323,14 +592,14 @@ public class LibraryCatalogueApp {
         libraryCatalogue.returnItemById(10);
         libraryCatalogue.returnItemById(11);
 
-        libraryCatalogue.addNewLoanById(1,1);
-        libraryCatalogue.addNewLoanById(1,2);
-        libraryCatalogue.addNewLoanById(1,3);
-        libraryCatalogue.addNewLoanById(1,4);
-        libraryCatalogue.addNewLoanById(1,5);
+        libraryCatalogue.createNewLoanById(1,1);
+        libraryCatalogue.createNewLoanById(1,2);
+        libraryCatalogue.createNewLoanById(1,3);
+        libraryCatalogue.createNewLoanById(1,4);
+        libraryCatalogue.createNewLoanById(1,5);
 
-        libraryCatalogue.addNewLoanById(1,6);
-        libraryCatalogue.addNewLoanById(1,7);
+        libraryCatalogue.createNewLoanById(1,6);
+        libraryCatalogue.createNewLoanById(1,7);
 
 
 

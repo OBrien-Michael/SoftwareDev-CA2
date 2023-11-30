@@ -1,9 +1,30 @@
 package library;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class Catalogue {
+
+    private static final int daysOverdue = 7;
+
+    private static final String libraryUserFilePath = "LibraryUser.csv";
+    private static final String authorFilePath = "Author.csv";
+    private static final String loanFilePath = "Loan.csv";
+    private static final String bookFilePath = "Book.csv";
+    private static final String audioBookFilePath = "AudioBook.csv";
+    private static final String thesesFilePath = "Theses.csv";
+    private static final String dissertationFilePath = "Dissertation.csv";
+    private static final String cdFilePath = "CD.csv";
+    private static final String dvdFilePath = "DVD.csv";
 
     private LinkedList<LibraryUser> libraryUserLinkedList;
     private LinkedList<Author> authorLinkedList;
@@ -261,7 +282,7 @@ public class Catalogue {
     }
 
     //Create a new loan with ids
-    public void addNewLoanById(int libraryUserId, int libraryItemId){
+    public void createNewLoanById(int libraryUserId, int libraryItemId){
 
         //Check to see if User exists
         for (LibraryUser libraryUser:libraryUserLinkedList) {
@@ -358,7 +379,7 @@ public class Catalogue {
             }
         }
         else{
-            System.out.println("No items added to the catalogue.");
+            System.out.println("No users have been added to the library.");
         }
     }
 
@@ -369,9 +390,45 @@ public class Catalogue {
             }
         }
         else{
-            System.out.println("No users added to the library.");
+            System.out.println("No users have been added to the library.");
         }
     }
+
+    public void checkLibraryUserDetailsById(int libraryUserId){
+
+        if(!this.getLibraryUserLinkedList().isEmpty()){
+            for (LibraryUser libraryUser: this.getLibraryUserLinkedList()){
+                if(libraryUserId == libraryUser.getLibraryUserId()){
+                    libraryUser.displayAllDetails();
+                    checkLibraryUserOverdue(libraryUserId);
+                }
+            }
+        }
+        else{
+            System.out.println("No users have been added to the library.");
+        }
+    }
+
+    //TODO Need to Test
+    public void checkLibraryUserOverdue(int libraryUserId) {
+
+        if(!this.getLoanLinkedList().isEmpty()){
+            for (Loan loan:this.getLoanLinkedList()) {
+                if(loan.getLibraryUser().getLibraryUserId() == libraryUserId){
+                    if(DAYS.between(loan.getDateBorrowed(),LocalDate.now()) > daysOverdue){
+
+                        loan.getLibraryItem().displayAllDetails();
+                        System.out.println("Days overdue: "+ DAYS.between(loan.getDateBorrowed(),LocalDate.now())+"\n");
+
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println("No items currently on loan.");
+        }
+    }
+
 
     public void listAllAuthorsAllDetails(){
         if(!this.getAuthorLinkedList().isEmpty()){
@@ -380,7 +437,7 @@ public class Catalogue {
             }
         }
         else{
-            System.out.println("No authors added to the library.");
+            System.out.println("No authors have been added to the library.");
         }
     }
 
@@ -391,7 +448,7 @@ public class Catalogue {
             }
         }
         else{
-            System.out.println("No authors added to the library.");
+            System.out.println("No authors have been added to the library.");
         }
     }
 
@@ -402,13 +459,14 @@ public class Catalogue {
             }
         }
         else{
-            System.out.println("No authors added to the library.");
+            System.out.println("No authors have been added to the library.");
         }
 
     }
 
+    //TODO
     public void listAllItemsByAuthorName(){
-
+        System.out.println("TODO");
     }
 
     public void listAvailableItems(){
@@ -419,7 +477,89 @@ public class Catalogue {
                 }
             }
         }
+        else{
+            System.out.println("There are items available in the catalogue.");
+        }
     }
+
+    public void listAvailableBooks() {
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability() && libraryItem instanceof Book){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no Books in the catalogue.");
+        }
+    }
+
+    public void listAvailableAudioBooks() {
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability() && libraryItem instanceof AudioBook){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no AudioBooks in the catalogue.");
+        }
+    }
+
+    public void listAvailableCDs() {
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability() && libraryItem instanceof CD){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no CDs in the catalogue.");
+        }
+    }
+
+    public void listAvailableDVDs() {
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability() && libraryItem instanceof DVD){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no DVDs in the catalogue.");
+        }
+    }
+
+    public void listAvailableTheses() {
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability() && libraryItem instanceof Theses){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no Theses in the catalogue.");
+        }
+    }
+
+    public void listAvailableDissertations() {
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            for (LibraryItem libraryItem: this.getLibraryItemLinkedList()){
+                if(libraryItem.getAvailability() && libraryItem instanceof Dissertation){
+                    libraryItem.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no Dissertations in the catalogue.");
+        }
+    }
+
 
     public void listUnavailableItems(){
         if(!this.getLibraryItemLinkedList().isEmpty()){
@@ -429,8 +569,47 @@ public class Catalogue {
                 }
             }
         }
+        else{
+            System.out.println("There are no items unavailable in the catalogue.");
+        }
     }
 
+    public void generateBorrowedItemsReport(){
+        if(!this.getLoanLinkedList().isEmpty()){
+            for(Loan loan: this.getLoanLinkedList()){
+                if(loan.getDateReturned() == null){
+                    loan.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no loans currently in the system.");
+        }
+    }
+
+    public void generateOverdueItemsReport(){
+        if(!this.getLoanLinkedList().isEmpty()){
+            for(Loan loan: this.getLoanLinkedList()){
+                if(DAYS.between(loan.getDateBorrowed(),LocalDate.now()) > daysOverdue){
+                    loan.displayAllDetails();
+                }
+            }
+        }
+        else{
+            System.out.println("There are no loans currently in the system.");
+        }
+    }
+
+    public void generateAllLoansReport(){
+        if(!this.getLoanLinkedList().isEmpty()){
+            for (Loan loan: this.getLoanLinkedList()){
+                loan.displayAllDetails();
+            }
+        }
+        else{
+            System.out.println("There are no loans currently in the system.");
+        }
+    }
 
 
 
@@ -446,24 +625,124 @@ public class Catalogue {
 
     public void loadCatalogue() {
 
+        //TODO
+
+
+
+
+
+
 
     }
 
-    public void saveCatalogue(){
-        for (LibraryUser libraryUser: libraryUserLinkedList){
-            libraryUser.saveToCSVFile();
-        }
+    public void saveCatalogue() {
 
-        for (LibraryItem libraryItem: libraryItemLinkedList){
-            libraryItem.saveToCSVFile();
-        }
+        try {
 
-        for (Author author: authorLinkedList){
-            author.saveToCSVFile();
-        }
+            if(!this.getLibraryUserLinkedList().isEmpty()){
 
-        for (Loan loan: loanLinkedList){
-            loan.saveToCSVFile();
+                BufferedWriter libraryUserWriter = Files.newBufferedWriter(Path.of(libraryUserFilePath));
+                CSVPrinter libraryUserCSVPrinter = new CSVPrinter(libraryUserWriter, CSVFormat.DEFAULT);
+
+                for (LibraryUser libraryUser : libraryUserLinkedList) {
+                    libraryUserCSVPrinter.printRecord(libraryUser.convertToCommaDelimitedArray());
+                }
+
+                libraryUserCSVPrinter.flush();
+            }
+            else{
+                System.out.println("No Library Users to save to file");
+            }
+
+
+
+            if(!this.getLibraryItemLinkedList().isEmpty()) {
+                BufferedWriter bookWriter = Files.newBufferedWriter(Path.of(bookFilePath));
+                CSVPrinter bookCSVPrinter = new CSVPrinter(bookWriter, CSVFormat.DEFAULT);
+
+                BufferedWriter audioBookWriter = Files.newBufferedWriter(Path.of(audioBookFilePath));
+                CSVPrinter audioBookCSVPrinter = new CSVPrinter(audioBookWriter, CSVFormat.DEFAULT);
+
+                BufferedWriter cdWriter = Files.newBufferedWriter(Path.of(cdFilePath));
+                CSVPrinter cdCSVPrinter = new CSVPrinter(cdWriter, CSVFormat.DEFAULT);
+
+                BufferedWriter dvdWriter = Files.newBufferedWriter(Path.of(dvdFilePath));
+                CSVPrinter dvdCSVPrinter = new CSVPrinter(dvdWriter, CSVFormat.DEFAULT);
+
+                BufferedWriter thesesWriter = Files.newBufferedWriter(Path.of(thesesFilePath));
+                CSVPrinter thesesCSVPrinter = new CSVPrinter(thesesWriter, CSVFormat.DEFAULT);
+
+                BufferedWriter dissertationWriter = Files.newBufferedWriter(Path.of(dissertationFilePath));
+                CSVPrinter dissertationCSVPrinter = new CSVPrinter(dissertationWriter, CSVFormat.DEFAULT);
+
+
+                for (LibraryItem libraryItem : libraryItemLinkedList) {
+                    if (libraryItem instanceof Book) {
+                        bookCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                    } else if (libraryItem instanceof AudioBook) {
+                        audioBookCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                    } else if (libraryItem instanceof CD) {
+                        cdCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                    } else if (libraryItem instanceof DVD) {
+                        dvdCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                    } else if (libraryItem instanceof Theses) {
+                        thesesCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                    } else if (libraryItem instanceof Dissertation) {
+                        dissertationCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                    }
+                }
+
+                bookCSVPrinter.flush();
+                audioBookCSVPrinter.flush();
+                cdCSVPrinter.flush();
+                dvdCSVPrinter.flush();
+                thesesCSVPrinter.flush();
+                dissertationCSVPrinter.flush();
+
+            }else{
+                System.out.println("No Library Items to print to file.");
+            }
+
+
+
+
+            if(!this.getAuthorLinkedList().isEmpty()){
+
+                BufferedWriter authorWriter = Files.newBufferedWriter(Path.of(authorFilePath));
+                CSVPrinter authorCSVPrinter = new CSVPrinter(authorWriter, CSVFormat.DEFAULT);
+
+
+                for (Author author : authorLinkedList) {
+                    authorCSVPrinter.printRecord(author.convertToCommaDelimitedArray());
+                }
+
+                authorCSVPrinter.flush();
+            }
+            else{
+                System.out.println("No Authors to save to file.");
+            }
+
+
+            if(!this.getLoanLinkedList().isEmpty()){
+                BufferedWriter loanWriter = Files.newBufferedWriter(Path.of(loanFilePath));
+                CSVPrinter loanCSVPrinter = new CSVPrinter(loanWriter, CSVFormat.DEFAULT);
+
+
+                for (Loan loan : loanLinkedList) {
+                    loanCSVPrinter.printRecord(loan.convertToCommaDelimitedArray());
+                }
+
+                loanCSVPrinter.flush();
+            }
+            else{
+                System.out.println("No Loans to save to file.");
+            }
+
+        }
+        catch(IOException ioException){
+            System.out.println("Problem encountered while saving");
+            System.out.println(ioException.getMessage());
+            System.out.println(ioException.toString());
         }
     }
 }

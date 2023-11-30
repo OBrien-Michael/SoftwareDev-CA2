@@ -1,6 +1,7 @@
 package library;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Dissertation extends ResearchItem{
 
@@ -33,7 +34,17 @@ public class Dissertation extends ResearchItem{
     }
 
     @Override
-    public boolean saveToCSVFile() {
-        return false;
+    public ArrayList<String> convertToCommaDelimitedArray() {
+        ArrayList<String> csvRecord = new ArrayList<>();
+
+        csvRecord.add(String.valueOf(this.getLibraryItemId()));
+        csvRecord.add(this.getTitle());
+        csvRecord.add(String.valueOf(this.getAuthorId()));
+        csvRecord.add(this.getTopic());
+        csvRecord.add(this.getAbstractText());
+        csvRecord.add(String.valueOf(this.getDatePublished()));
+        csvRecord.add(String.valueOf(this.getAvailability()));
+
+        return csvRecord;
     }
 }

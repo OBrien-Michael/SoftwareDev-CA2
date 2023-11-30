@@ -1,5 +1,6 @@
 package library;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Author implements Printable,Saveable,Comparable<Author>{
@@ -85,7 +86,19 @@ public class Author implements Printable,Saveable,Comparable<Author>{
     }
 
     @Override
-    public boolean saveToCSVFile() {
-        return false;
+    public ArrayList<String> convertToCommaDelimitedArray() {
+        ArrayList<String> csvRecord = new ArrayList<>();
+
+        csvRecord.add(String.valueOf(this.getAuthorId()));
+        csvRecord.add(this.getAuthorName());
+
+        if (!this.getAuthoredItems().isEmpty()){
+            for (LibraryItem libraryItem:this.getAuthoredItems()){
+                csvRecord.add(String.valueOf(libraryItem.getLibraryItemId()));
+            }
+        }
+
+
+        return csvRecord;
     }
 }

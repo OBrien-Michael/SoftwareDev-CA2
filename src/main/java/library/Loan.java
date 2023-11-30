@@ -2,6 +2,7 @@ package library;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Loan implements Printable,Saveable,Comparable<Loan>{
 
@@ -69,16 +70,30 @@ public class Loan implements Printable,Saveable,Comparable<Loan>{
 
     @Override
     public void displayAllDetails() {
-
+        this.getLibraryUser().displayAllDetails();
+        this.getLibraryItem().displayAllDetails();
+        System.out.println("Date borrowed: "+ this.getDateBorrowed());
     }
 
     @Override
     public void displaySummaryDetails() {
-
+        this.getLibraryUser().displaySummaryDetails();
+        this.getLibraryItem().displaySummaryDetails();
+        System.out.println("Date borrowed: "+ this.getDateBorrowed());
     }
 
     @Override
-    public boolean saveToCSVFile() {
-        return false;
+    public ArrayList<String> convertToCommaDelimitedArray() {
+        ArrayList<String> csvRecord = new ArrayList<>();
+
+        csvRecord.add(String.valueOf(this.getLibraryUser().getLibraryUserId()));
+        csvRecord.add(String.valueOf(this.getLibraryItem().getLibraryItemId()));
+        csvRecord.add(String.valueOf(this.getDateBorrowed()));
+
+        if (this.getDateReturned() != null){
+            csvRecord.add(String.valueOf(this.getDateReturned()));
+        }
+
+        return csvRecord;
     }
 }

@@ -1,5 +1,7 @@
 package library;
 
+import java.util.ArrayList;
+
 public class Book extends LiteratureItem{
 
     public Book() {
@@ -26,7 +28,16 @@ public class Book extends LiteratureItem{
 
 
     @Override
-    public boolean saveToCSVFile() {
-        return false;
+    public ArrayList<String> convertToCommaDelimitedArray() {
+        ArrayList<String> csvRecord = new ArrayList<>();
+
+        csvRecord.add(String.valueOf(this.getLibraryItemId()));
+        csvRecord.add(this.getTitle());
+        csvRecord.add(String.valueOf(this.getAuthorId()));
+        csvRecord.add(this.getIsbn());
+        csvRecord.add(String.valueOf(this.getAvailability()));
+
+
+        return csvRecord;
     }
 }
