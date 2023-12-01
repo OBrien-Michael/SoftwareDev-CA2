@@ -717,28 +717,6 @@ public class Catalogue {
                 System.out.println("CD.csv file does not exist. Cannot load.");
             }
 
-            if(cdFile.isFile()){
-                Reader cdReader = Files.newBufferedReader(cdFile.toPath());
-                CSVParser cdCSVParser = new CSVParser(cdReader,CSVFormat.DEFAULT);
-
-                for (CSVRecord cdRecord: cdCSVParser) {
-
-                    int libraryItemId = Integer.parseInt(cdRecord.get(0));
-                    String cdTitle = cdRecord.get(1);
-                    int authorId = Integer.parseInt(cdRecord.get(2));
-                    int cdPlaytime = Integer.parseInt(cdRecord.get(3));
-                    boolean cdAvailability = Boolean.parseBoolean(cdRecord.get(4));
-
-
-                    CD loadCD = new CD(libraryItemId,cdTitle,authorId,cdAvailability,cdPlaytime);
-                    this.libraryItemLinkedList.add(loadCD);
-                }
-            }
-            else{
-                System.out.println("CD.csv file does not exist. Cannot load.");
-            }
-
-
             if(dvdFile.isFile()){
                 Reader dvdReader = Files.newBufferedReader(dvdFile.toPath());
                 CSVParser dvdCSVParser = new CSVParser(dvdReader,CSVFormat.DEFAULT);
@@ -866,35 +844,17 @@ public class Catalogue {
                             }
                         }
                     }
-
-
-
-
                 }
             }
             else{
                 System.out.println("Loan.csv file does not exist. Cannot load.");
             }
-
-
-
-
-
-
-
         }
         catch(IOException ioException){
             System.out.println("Problem encountered while loading.");
             System.out.println(ioException.getMessage());
             System.out.println(ioException.toString());
         }
-
-
-
-
-
-
-
     }
 
 
