@@ -28,20 +28,23 @@ public class LibraryCatalogueApp {
 
     //Main menu for the application
     private static void appMainMenu(){
+
+        //System.out.println("Would you like to load data?");
+        //System.out.println("1. Yes");
+        //System.out.println("Any other number for no");
+        //int choice = Integer.parseInt(userInput.nextLine());
+        //if(choice == 1){
+        System.out.println("Loading from CSV files...");
+        libraryCatalogue.loadCatalogue();
+        //}
+
+
         while (true) {
 
             System.out.println("\nWelcome to the Library\n");
 
-            //System.out.println("Would you like to load data?");
-            //System.out.println("1. Yes");
-            //System.out.println("Any other number for no");
-            //int choice = Integer.parseInt(userInput.nextLine());
-            //if(choice == 1){
-            //    libraryCatalogue.loadCatalogue();
-            //}
 
-
-            System.out.println("Please choose an option:");
+            System.out.println("\nPlease choose an option:");
             System.out.println("1. Library User Menu");
             System.out.println("2. Librarian Menu");
             System.out.println("3. Save and Exit");

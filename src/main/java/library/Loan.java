@@ -46,10 +46,18 @@ public class Loan implements Printable,Saveable,Comparable<Loan>{
     public Loan() {
     }
 
-    public Loan(LibraryUser libraryUser, library.LibraryItem libraryItem, LocalDate dateBorrowed) {
+    public Loan(LibraryUser libraryUser, LibraryItem libraryItem, LocalDate dateBorrowed) {
         this.libraryUser = libraryUser;
         this.libraryItem = libraryItem;
         this.dateBorrowed = dateBorrowed;
+        this.dateReturned = null;
+    }
+
+    public Loan(LibraryUser libraryUser, LibraryItem libraryItem, LocalDate dateBorrowed, LocalDate dateReturned) {
+        this.libraryUser = libraryUser;
+        this.libraryItem = libraryItem;
+        this.dateBorrowed = dateBorrowed;
+        this.dateReturned = dateReturned;
     }
 
     @Override
