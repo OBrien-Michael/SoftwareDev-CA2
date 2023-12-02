@@ -1,11 +1,12 @@
 import library.Catalogue;
 import library.LibraryUser;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.io.FileReader;
 
 public class LibraryCatalogueApp {
 
@@ -40,38 +41,42 @@ public class LibraryCatalogueApp {
 
 
         while (true) {
-
-            System.out.println("\nWelcome to the Library\n");
-
+            System.out.println("\n--------------------------");
+            System.out.println("Welcome to the Library");
+            System.out.println("--------------------------");
 
             System.out.println("\nPlease choose an option:");
             System.out.println("1. Library User Menu");
             System.out.println("2. Librarian Menu");
             System.out.println("3. Save and Exit");
-            System.out.println("4. Exit");
+            System.out.println("4. Exit\n");
+            System.out.println("PLease enter your choose  :");
 
-            int choice = Integer.parseInt(userInput.nextLine());
-            switch (choice) {
-                case 1:
-                    appLibraryUserMenu();
-                    break;
-                case 2:
-                    appLibrarianMenu();
-                    break;
-                case 3:
-
-                    libraryCatalogue.saveCatalogue();
-
-                    System.out.println("Exiting Application.");
-                    System.exit(0);
-                    break;
-                case 4:
-                    System.out.println("Exiting Application.");
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+            try {
+                int choice = Integer.parseInt(userInput.nextLine());
+                switch (choice) {
+                    case 1:
+                        appLibraryUserMenu();
+                        break;
+                    case 2:
+                        appLibrarianMenu();
+                        break;
+                    case 3:
+                        libraryCatalogue.saveCatalogue();
+                        System.out.println("Exiting Application.");
+                        System.exit(0);
+                        break;
+                    case 4:
+                        System.out.println("Exiting Application.");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                        break;
                 }
-
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid entry. Please enter a valid number" + ".");
+            }
         }
     }
 
@@ -79,45 +84,48 @@ public class LibraryCatalogueApp {
     //Library User Menu
     private static void appLibraryUserMenu(){
         while (true) {
+            System.out.println("--------------------");
             System.out.println("\nLibrary User Menu:");
+            System.out.println("--------------------");
             System.out.println("1. Open new Library User account");
             System.out.println("2. Display library items");
             System.out.println("3. Search for library item");
             System.out.println("4. Loan a library item");
             System.out.println("5. Return a library item");
             System.out.println("6. Check library user details and overdue items");
-            System.out.println("7. Return to main menu");
+            System.out.println("7. Return to main menu\n");
 
-
-            int choice = Integer.parseInt(userInput.nextLine());
-            switch (choice) {
-                case 1:
-                    createNewLibraryUserMenu();
-                    break;
-                case 2:
-                    displayLibraryItemsMenu();
-                    break;
-                case 3:
-                    searchForLibraryItemMenu();
-                    break;
-                case 4:
-                    loanItemMenu();
-                    break;
-                case 5:
-                    returnItemMenu();
-                    break;
-                case 6:
-                    checkLibraryUserMenu();
-                    break;
-                case 7:
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+            try {
+                int choice = Integer.parseInt(userInput.nextLine());
+                switch (choice) {
+                    case 1:
+                        createNewLibraryUserMenu();
+                        break;
+                    case 2:
+                        displayLibraryItemsMenu();
+                        break;
+                    case 3:
+                        searchForLibraryItemMenu();
+                        break;
+                    case 4:
+                        loanItemMenu();
+                        break;
+                    case 5:
+                        returnItemMenu();
+                        break;
+                    case 6:
+                        checkLibraryUserMenu();
+                        break;
+                    case 7:
+                        return; // This will exit the current menu and return to the previous menu
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid entry. Please enter a valid number.");
             }
-
         }
     }
-
     //Create a new Library User
     private static void createNewLibraryUserMenu(){
 
@@ -133,6 +141,7 @@ public class LibraryCatalogueApp {
 
     private static void displayLibraryItemsMenu() {
         System.out.println("\nDisplay Items:");
+        System.out.println("----------------");
         System.out.println("1. List all items");
         System.out.println("2. List all items summary");
         System.out.println("3. List all available items");
@@ -184,7 +193,6 @@ public class LibraryCatalogueApp {
                 System.out.println("Invalid choice. Please try again.");
         }
     }
-
     private static void loanItemMenu() {
 
         System.out.println("\nCreate a new Loan:");
@@ -234,7 +242,9 @@ public class LibraryCatalogueApp {
 
     private static void appLibrarianMenu() {
         while (true) {
+            System.out.println("---------------");
             System.out.println("Librarian Menu:");
+            System.out.println("---------------");
             System.out.println("1. Add new library user");
             System.out.println("2. Delete a library user");
             System.out.println("3. Add new author");
@@ -243,7 +253,7 @@ public class LibraryCatalogueApp {
             System.out.println("6. Delete a library item");
             System.out.println("7. Display library items");
             System.out.println("8. Search library items");
-            System.out.println("9. Search for items by author");
+            System.out.println("9. Display all Authors");
             System.out.println("10. Save and Load functions");
             System.out.println("11. Generate Borrowed Items Report");
             System.out.println("12. Generate Overdue Items Report");
@@ -276,7 +286,7 @@ public class LibraryCatalogueApp {
                     searchForLibraryItemMenu();
                     break;
                 case 9:
-                    searchForItemsByAuthorMenu();
+                    displayAuthorDataMenu();
                     break;
                 case 10:
                     saveAndLoadFunctionMenu();
@@ -474,9 +484,17 @@ public class LibraryCatalogueApp {
         libraryCatalogue.removeLibraryItemById(libraryItemId);
     }
 
-    private static void searchForItemsByAuthorMenu() {
-        //TODO
-        System.out.println("TODO");
+    private static void displayAuthorDataMenu() {
+        System.out.println("\nDisplaying ID of the Authors from our Library:");
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader("Author.csv"))) {
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while trying to read the file.");
+            e.printStackTrace();
+        }
     }
 
     private static void saveAndLoadFunctionMenu() {
