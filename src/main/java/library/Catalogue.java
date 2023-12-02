@@ -10,7 +10,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -630,155 +629,168 @@ public class Catalogue {
 
     public void loadCatalogue() {
 
-        try{
-
+        
             //Loading Library Users
             if(libraryUserFile.isFile()){
-                Reader libraryUserReader = Files.newBufferedReader(libraryUserFile.toPath());
-                CSVParser libraryUserCSVParser = new CSVParser(libraryUserReader,CSVFormat.DEFAULT);
+                try (Reader libraryUserReader = Files.newBufferedReader(libraryUserFile.toPath());
+                    CSVParser libraryUserCSVParser = new CSVParser(libraryUserReader,CSVFormat.DEFAULT)) {
 
-                for (CSVRecord libraryUserRecord: libraryUserCSVParser) {
+                    for (CSVRecord libraryUserRecord: libraryUserCSVParser) {
 
-                    int libraryUserId = Integer.parseInt(libraryUserRecord.get(0));
-                    String libraryUserName = libraryUserRecord.get(1);
+                        int libraryUserId = Integer.parseInt(libraryUserRecord.get(0));
+                        String libraryUserName = libraryUserRecord.get(1);
 
 
-                    LibraryUser loadLibraryUser = new LibraryUser(libraryUserId,libraryUserName);
-                    this.libraryUserLinkedList.add(loadLibraryUser);
+                        LibraryUser loadLibraryUser = new LibraryUser(libraryUserId,libraryUserName);
+                        this.libraryUserLinkedList.add(loadLibraryUser);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading LibraryUser.csv: " + e.getMessage());
                 }
-            }
-            else{
+            
+            } else{
                 System.out.println("LibraryUser.csv file does not exist. Cannot load.");
             }
 
 
             //Loading Library Items
             if(bookFile.isFile()){
-                Reader bookReader = Files.newBufferedReader(bookFile.toPath());
-                CSVParser bookCSVParser = new CSVParser(bookReader,CSVFormat.DEFAULT);
+                try (Reader bookReader = Files.newBufferedReader(bookFile.toPath());
+                    CSVParser bookCSVParser = new CSVParser(bookReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord bookRecord: bookCSVParser) {
+                    for (CSVRecord bookRecord: bookCSVParser) {
 
-                    int libraryItemId = Integer.parseInt(bookRecord.get(0));
-                    String bookTitle = bookRecord.get(1);
-                    int authorId = Integer.parseInt(bookRecord.get(2));
-                    String bookIsbn = bookRecord.get(3);
-                    boolean bookAvailability = Boolean.parseBoolean(bookRecord.get(4));
+                        int libraryItemId = Integer.parseInt(bookRecord.get(0));
+                        String bookTitle = bookRecord.get(1);
+                        int authorId = Integer.parseInt(bookRecord.get(2));
+                        String bookIsbn = bookRecord.get(3);
+                        boolean bookAvailability = Boolean.parseBoolean(bookRecord.get(4));
 
 
-                    Book loadBook = new Book(libraryItemId,bookTitle,authorId,bookAvailability,bookIsbn);
-                    this.libraryItemLinkedList.add(loadBook);
+                        Book loadBook = new Book(libraryItemId,bookTitle,authorId,bookAvailability,bookIsbn);
+                        this.libraryItemLinkedList.add(loadBook);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading Book.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("Book.csv file does not exist. Cannot load.");
             }
 
             if(audioBookFile.isFile()){
-                Reader audioBookReader = Files.newBufferedReader(audioBookFile.toPath());
-                CSVParser audioBookCSVParser = new CSVParser(audioBookReader,CSVFormat.DEFAULT);
+                try (Reader audioBookReader = Files.newBufferedReader(audioBookFile.toPath());
+                    CSVParser audioBookCSVParser = new CSVParser(audioBookReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord audioBookRecord: audioBookCSVParser) {
+                    for (CSVRecord audioBookRecord: audioBookCSVParser) {
 
-                    int libraryItemId = Integer.parseInt(audioBookRecord.get(0));
-                    String audioBookTitle = audioBookRecord.get(1);
-                    int authorId = Integer.parseInt(audioBookRecord.get(2));
-                    String audioBookIsbn = audioBookRecord.get(3);
-                    boolean audioBookAvailability = Boolean.parseBoolean(audioBookRecord.get(4));
+                        int libraryItemId = Integer.parseInt(audioBookRecord.get(0));
+                        String audioBookTitle = audioBookRecord.get(1);
+                        int authorId = Integer.parseInt(audioBookRecord.get(2));
+                        String audioBookIsbn = audioBookRecord.get(3);
+                        boolean audioBookAvailability = Boolean.parseBoolean(audioBookRecord.get(4));
 
 
-                    AudioBook loadAudioBook = new AudioBook(libraryItemId,audioBookTitle,authorId,audioBookAvailability,audioBookIsbn);
-                    this.libraryItemLinkedList.add(loadAudioBook);
+                        AudioBook loadAudioBook = new AudioBook(libraryItemId,audioBookTitle,authorId,audioBookAvailability,audioBookIsbn);
+                        this.libraryItemLinkedList.add(loadAudioBook);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading AudioBook.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("AudioBook.csv file does not exist. Cannot load.");
             }
 
 
             if(cdFile.isFile()){
-                Reader cdReader = Files.newBufferedReader(cdFile.toPath());
-                CSVParser cdCSVParser = new CSVParser(cdReader,CSVFormat.DEFAULT);
+                try (Reader cdReader = Files.newBufferedReader(cdFile.toPath());
+                    CSVParser cdCSVParser = new CSVParser(cdReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord cdRecord: cdCSVParser) {
+                    for (CSVRecord cdRecord: cdCSVParser) {
 
-                    int libraryItemId = Integer.parseInt(cdRecord.get(0));
-                    String cdTitle = cdRecord.get(1);
-                    int authorId = Integer.parseInt(cdRecord.get(2));
-                    int cdPlaytime = Integer.parseInt(cdRecord.get(3));
-                    boolean audioBookAvailability = Boolean.parseBoolean(cdRecord.get(4));
+                        int libraryItemId = Integer.parseInt(cdRecord.get(0));
+                        String cdTitle = cdRecord.get(1);
+                        int authorId = Integer.parseInt(cdRecord.get(2));
+                        int cdPlaytime = Integer.parseInt(cdRecord.get(3));
+                        boolean audioBookAvailability = Boolean.parseBoolean(cdRecord.get(4));
 
 
-                    CD loadCD = new CD(libraryItemId,cdTitle,authorId,audioBookAvailability,cdPlaytime);
-                    this.libraryItemLinkedList.add(loadCD);
+                        CD loadCD = new CD(libraryItemId,cdTitle,authorId,audioBookAvailability,cdPlaytime);
+                        this.libraryItemLinkedList.add(loadCD);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading CD.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("CD.csv file does not exist. Cannot load.");
             }
 
             if(dvdFile.isFile()){
-                Reader dvdReader = Files.newBufferedReader(dvdFile.toPath());
-                CSVParser dvdCSVParser = new CSVParser(dvdReader,CSVFormat.DEFAULT);
+                try (Reader dvdReader = Files.newBufferedReader(dvdFile.toPath());
+                    CSVParser dvdCSVParser = new CSVParser(dvdReader,CSVFormat.DEFAULT)){
+                    for (CSVRecord dvdRecord: dvdCSVParser) {
 
-                for (CSVRecord dvdRecord: dvdCSVParser) {
-
-                    int libraryItemId = Integer.parseInt(dvdRecord.get(0));
-                    String dvdTitle = dvdRecord.get(1);
-                    int authorId = Integer.parseInt(dvdRecord.get(2));
-                    int dvdPlaytime = Integer.parseInt(dvdRecord.get(3));
-                    boolean dvdAvailability = Boolean.parseBoolean(dvdRecord.get(4));
+                        int libraryItemId = Integer.parseInt(dvdRecord.get(0));
+                        String dvdTitle = dvdRecord.get(1);
+                        int authorId = Integer.parseInt(dvdRecord.get(2));
+                        int dvdPlaytime = Integer.parseInt(dvdRecord.get(3));
+                        boolean dvdAvailability = Boolean.parseBoolean(dvdRecord.get(4));
 
 
-                    DVD loadDVD = new DVD(libraryItemId,dvdTitle,authorId,dvdAvailability,dvdPlaytime);
-                    this.libraryItemLinkedList.add(loadDVD);
+                        DVD loadDVD = new DVD(libraryItemId,dvdTitle,authorId,dvdAvailability,dvdPlaytime);
+                        this.libraryItemLinkedList.add(loadDVD);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading DVD.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("DVD.csv file does not exist. Cannot load.");
             }
 
             if(thesesFile.isFile()){
-                Reader thesesReader = Files.newBufferedReader(thesesFile.toPath());
-                CSVParser thesesCSVParser = new CSVParser(thesesReader,CSVFormat.DEFAULT);
+                try (Reader thesesReader = Files.newBufferedReader(thesesFile.toPath());
+                    CSVParser thesesCSVParser = new CSVParser(thesesReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord thesesRecord: thesesCSVParser) {
+                    for (CSVRecord thesesRecord: thesesCSVParser) {
 
-                    int libraryItemId = Integer.parseInt(thesesRecord.get(0));
-                    String thesesTitle = thesesRecord.get(1);
-                    int authorId = Integer.parseInt(thesesRecord.get(2));
-                    String thesesTopic = thesesRecord.get(3);
-                    String thesesAbstract = thesesRecord.get(4);
-                    LocalDate thesesDatePublished = LocalDate.parse(thesesRecord.get(5));
-                    boolean thesesAvailability = Boolean.parseBoolean(thesesRecord.get(4));
+                        int libraryItemId = Integer.parseInt(thesesRecord.get(0));
+                        String thesesTitle = thesesRecord.get(1);
+                        int authorId = Integer.parseInt(thesesRecord.get(2));
+                        String thesesTopic = thesesRecord.get(3);
+                        String thesesAbstract = thesesRecord.get(4);
+                        LocalDate thesesDatePublished = LocalDate.parse(thesesRecord.get(5));
+                        boolean thesesAvailability = Boolean.parseBoolean(thesesRecord.get(4));
 
-                    Theses loadTheses = new Theses(libraryItemId,thesesTitle,authorId,thesesAvailability,thesesTopic,thesesAbstract,thesesDatePublished);
-                    this.libraryItemLinkedList.add(loadTheses);
+                        Theses loadTheses = new Theses(libraryItemId,thesesTitle,authorId,thesesAvailability,thesesTopic,thesesAbstract,thesesDatePublished);
+                        this.libraryItemLinkedList.add(loadTheses);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading Theses.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("Theses.csv file does not exist. Cannot load.");
             }
 
             if(dissertationFile.isFile()){
-                Reader dissertationReader = Files.newBufferedReader(dissertationFile.toPath());
-                CSVParser dissertationCSVParser = new CSVParser(dissertationReader,CSVFormat.DEFAULT);
+                try (Reader dissertationReader = Files.newBufferedReader(dissertationFile.toPath());
+                    CSVParser dissertationCSVParser = new CSVParser(dissertationReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord dissertationRecord: dissertationCSVParser) {
+                    for (CSVRecord dissertationRecord: dissertationCSVParser) {
 
-                    int libraryItemId = Integer.parseInt(dissertationRecord.get(0));
-                    String dissertationTitle = dissertationRecord.get(1);
-                    int authorId = Integer.parseInt(dissertationRecord.get(2));
-                    String dissertationTopic = dissertationRecord.get(3);
-                    String dissertationAbstract = dissertationRecord.get(4);
-                    LocalDate dissertationDatePublished = LocalDate.parse(dissertationRecord.get(5));
-                    boolean dissertationAvailability = Boolean.parseBoolean(dissertationRecord.get(4));
+                        int libraryItemId = Integer.parseInt(dissertationRecord.get(0));
+                        String dissertationTitle = dissertationRecord.get(1);
+                        int authorId = Integer.parseInt(dissertationRecord.get(2));
+                        String dissertationTopic = dissertationRecord.get(3);
+                        String dissertationAbstract = dissertationRecord.get(4);
+                        LocalDate dissertationDatePublished = LocalDate.parse(dissertationRecord.get(5));
+                        boolean dissertationAvailability = Boolean.parseBoolean(dissertationRecord.get(4));
 
-                    Dissertation loadDissertation = new Dissertation(libraryItemId,dissertationTitle,authorId,dissertationAvailability,dissertationTopic,dissertationAbstract,dissertationDatePublished);
-                    this.libraryItemLinkedList.add(loadDissertation);
+                        Dissertation loadDissertation = new Dissertation(libraryItemId,dissertationTitle,authorId,dissertationAvailability,dissertationTopic,dissertationAbstract,dissertationDatePublished);
+                        this.libraryItemLinkedList.add(loadDissertation);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading Dissertation.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("Dissertation.csv file does not exist. Cannot load.");
             }
 
@@ -787,74 +799,73 @@ public class Catalogue {
 
             //Loading Authors
             if(authorFile.isFile()){
-                Reader authorReader = Files.newBufferedReader(authorFile.toPath());
-                CSVParser authorCSVParser = new CSVParser(authorReader,CSVFormat.DEFAULT);
+                try (Reader authorReader = Files.newBufferedReader(authorFile.toPath());
+                    CSVParser authorCSVParser = new CSVParser(authorReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord authorRecord: authorCSVParser) {
+                    for (CSVRecord authorRecord: authorCSVParser) {
 
-                    int authorId = Integer.parseInt(authorRecord.get(0));
-                    String authorName = authorRecord.get(1);
+                        int authorId = Integer.parseInt(authorRecord.get(0));
+                        String authorName = authorRecord.get(1);
 
 
-                    Author loadAuthor = new Author(authorId,authorName);
-                    this.authorLinkedList.add(loadAuthor);
+                        Author loadAuthor = new Author(authorId,authorName);
+                        this.authorLinkedList.add(loadAuthor);
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error reading Author.csv: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("Author.csv file does not exist. Cannot load.");
             }
 
 
             //Loading Loans
             if(loanFile.isFile()){
-                Reader loanReader = Files.newBufferedReader(loanFile.toPath());
-                CSVParser loanCSVParser = new CSVParser(loanReader,CSVFormat.DEFAULT);
+                try (Reader loanReader = Files.newBufferedReader(loanFile.toPath());
+                    CSVParser loanCSVParser = new CSVParser(loanReader,CSVFormat.DEFAULT)){
 
-                for (CSVRecord loanRecord: loanCSVParser) {
+                    for (CSVRecord loanRecord: loanCSVParser) {
 
-                    int libraryUserId = Integer.parseInt(loanRecord.get(0));
-                    int libraryItemId = Integer.parseInt(loanRecord.get(1));
-                    LocalDate dateBorrowed = LocalDate.parse(loanRecord.get(2));
+                        int libraryUserId = Integer.parseInt(loanRecord.get(0));
+                        int libraryItemId = Integer.parseInt(loanRecord.get(1));
+                        LocalDate dateBorrowed = LocalDate.parse(loanRecord.get(2));
 
-                    if(loanRecord.size() > 3){
-                        LocalDate dateReturned = LocalDate.parse(loanRecord.get(3));
+                        if(loanRecord.size() > 3){
+                            LocalDate dateReturned = LocalDate.parse(loanRecord.get(3));
 
-                        for (LibraryUser libraryUser : this.getLibraryUserLinkedList()){
-                            if(libraryUser.getLibraryUserId() == libraryUserId){
-                                for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
-                                    if(libraryItem.getLibraryItemId() == libraryItemId){
-                                        Loan loadLoan = new Loan(libraryUser,libraryItem,dateBorrowed,dateReturned);
-                                        this.loanLinkedList.add(loadLoan);
+                            for (LibraryUser libraryUser : this.getLibraryUserLinkedList()){
+                                if(libraryUser.getLibraryUserId() == libraryUserId){
+                                    for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
+                                        if(libraryItem.getLibraryItemId() == libraryItemId){
+                                            Loan loadLoan = new Loan(libraryUser,libraryItem,dateBorrowed,dateReturned);
+                                            this.loanLinkedList.add(loadLoan);
+                                        }
+
                                     }
 
                                 }
-
                             }
                         }
-                    }
-                    else{
-                        for (LibraryUser libraryUser : this.getLibraryUserLinkedList()){
-                            if(libraryUser.getLibraryUserId() == libraryUserId){
-                                for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
-                                    if(libraryItem.getLibraryItemId() == libraryItemId){
-                                        Loan loadLoan = new Loan(libraryUser,libraryItem,dateBorrowed);
-                                        this.loanLinkedList.add(loadLoan);
+                        else{
+                            for (LibraryUser libraryUser : this.getLibraryUserLinkedList()){
+                                if(libraryUser.getLibraryUserId() == libraryUserId){
+                                    for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
+                                        if(libraryItem.getLibraryItemId() == libraryItemId){
+                                            Loan loadLoan = new Loan(libraryUser,libraryItem,dateBorrowed);
+                                            this.loanLinkedList.add(loadLoan);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                } catch (IOException e) {
+                    System.out.println("Problem encountered while loading loans: " + e.getMessage());
                 }
-            }
-            else{
+            }else{
                 System.out.println("Loan.csv file does not exist. Cannot load.");
             }
-        }
-        catch(IOException ioException){
-            System.out.println("Problem encountered while loading.");
-            System.out.println(ioException.getMessage());
-            System.out.println(ioException.toString());
-        }
+        
     }
 
 
@@ -865,69 +876,61 @@ public class Catalogue {
 
     public void saveCatalogue() {
 
-        try {
+        
 
             if(!this.getLibraryUserLinkedList().isEmpty()){
 
-                BufferedWriter libraryUserWriter = Files.newBufferedWriter(libraryUserFile.toPath());
-                CSVPrinter libraryUserCSVPrinter = new CSVPrinter(libraryUserWriter, CSVFormat.DEFAULT);
+                try (BufferedWriter libraryUserWriter = Files.newBufferedWriter(libraryUserFile.toPath());
+                    CSVPrinter libraryUserCSVPrinter = new CSVPrinter(libraryUserWriter, CSVFormat.DEFAULT)){
 
-                for (LibraryUser libraryUser : libraryUserLinkedList) {
-                    libraryUserCSVPrinter.printRecord(libraryUser.convertToCommaDelimitedArray());
+                    for (LibraryUser libraryUser : libraryUserLinkedList) {
+                        libraryUserCSVPrinter.printRecord(libraryUser.convertToCommaDelimitedArray());
+                    }
+
+                    libraryUserCSVPrinter.flush();
+                } catch (IOException e) {
+                    System.out.println("Error writing LibraryUser.csv: " + e.getMessage());
                 }
-
-                libraryUserCSVPrinter.flush();
-            }
-            else{
+            }else{
                 System.out.println("No Library Users to save to file");
             }
 
 
 
-            if(!this.getLibraryItemLinkedList().isEmpty()) {
-                BufferedWriter bookWriter = Files.newBufferedWriter(bookFile.toPath());
-                CSVPrinter bookCSVPrinter = new CSVPrinter(bookWriter, CSVFormat.DEFAULT);
-
-                BufferedWriter audioBookWriter = Files.newBufferedWriter(audioBookFile.toPath());
-                CSVPrinter audioBookCSVPrinter = new CSVPrinter(audioBookWriter, CSVFormat.DEFAULT);
-
-                BufferedWriter cdWriter = Files.newBufferedWriter(cdFile.toPath());
-                CSVPrinter cdCSVPrinter = new CSVPrinter(cdWriter, CSVFormat.DEFAULT);
-
-                BufferedWriter dvdWriter = Files.newBufferedWriter(dvdFile.toPath());
-                CSVPrinter dvdCSVPrinter = new CSVPrinter(dvdWriter, CSVFormat.DEFAULT);
-
-                BufferedWriter thesesWriter = Files.newBufferedWriter(thesesFile.toPath());
-                CSVPrinter thesesCSVPrinter = new CSVPrinter(thesesWriter, CSVFormat.DEFAULT);
-
-                BufferedWriter dissertationWriter = Files.newBufferedWriter(dissertationFile.toPath());
-                CSVPrinter dissertationCSVPrinter = new CSVPrinter(dissertationWriter, CSVFormat.DEFAULT);
-
-
-                for (LibraryItem libraryItem : libraryItemLinkedList) {
-                    if (libraryItem instanceof Book) {
-                        bookCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
-                    } else if (libraryItem instanceof AudioBook) {
-                        audioBookCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
-                    } else if (libraryItem instanceof CD) {
-                        cdCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
-                    } else if (libraryItem instanceof DVD) {
-                        dvdCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
-                    } else if (libraryItem instanceof Theses) {
-                        thesesCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
-                    } else if (libraryItem instanceof Dissertation) {
-                        dissertationCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+            if (!this.getLibraryItemLinkedList().isEmpty()) {
+                try (BufferedWriter bookWriter = Files.newBufferedWriter(bookFile.toPath());
+                     CSVPrinter bookCSVPrinter = new CSVPrinter(bookWriter, CSVFormat.DEFAULT);
+                     BufferedWriter audioBookWriter = Files.newBufferedWriter(audioBookFile.toPath());
+                     CSVPrinter audioBookCSVPrinter = new CSVPrinter(audioBookWriter, CSVFormat.DEFAULT);
+                     BufferedWriter cdWriter = Files.newBufferedWriter(cdFile.toPath());
+                     CSVPrinter cdCSVPrinter = new CSVPrinter(cdWriter, CSVFormat.DEFAULT);
+                     BufferedWriter dvdWriter = Files.newBufferedWriter(dvdFile.toPath());
+                     CSVPrinter dvdCSVPrinter = new CSVPrinter(dvdWriter, CSVFormat.DEFAULT);
+                     BufferedWriter thesesWriter = Files.newBufferedWriter(thesesFile.toPath());
+                     CSVPrinter thesesCSVPrinter = new CSVPrinter(thesesWriter, CSVFormat.DEFAULT);
+                     BufferedWriter dissertationWriter = Files.newBufferedWriter(dissertationFile.toPath());
+                     CSVPrinter dissertationCSVPrinter = new CSVPrinter(dissertationWriter, CSVFormat.DEFAULT)) {
+            
+                    for (LibraryItem libraryItem : libraryItemLinkedList) {
+                        if (libraryItem instanceof Book) {
+                            bookCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                        } else if (libraryItem instanceof AudioBook) {
+                            audioBookCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                        } else if (libraryItem instanceof CD) {
+                            cdCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                        } else if (libraryItem instanceof DVD) {
+                            dvdCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                        } else if (libraryItem instanceof Theses) {
+                            thesesCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                        } else if (libraryItem instanceof Dissertation) {
+                            dissertationCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
+                        }
                     }
+                    
+                } catch (IOException e) {
+                    System.out.println("Problem encountered while saving Library Items: " + e.getMessage());
                 }
-
-                bookCSVPrinter.flush();
-                audioBookCSVPrinter.flush();
-                cdCSVPrinter.flush();
-                dvdCSVPrinter.flush();
-                thesesCSVPrinter.flush();
-                dissertationCSVPrinter.flush();
-
-            }else{
+            } else {
                 System.out.println("No Library Items to print to file.");
             }
 
@@ -936,41 +939,40 @@ public class Catalogue {
 
             if(!this.getAuthorLinkedList().isEmpty()){
 
-                BufferedWriter authorWriter = Files.newBufferedWriter(authorFile.toPath());
-                CSVPrinter authorCSVPrinter = new CSVPrinter(authorWriter, CSVFormat.DEFAULT);
+                try (BufferedWriter authorWriter = Files.newBufferedWriter(authorFile.toPath());
+                    CSVPrinter authorCSVPrinter = new CSVPrinter(authorWriter, CSVFormat.DEFAULT)){
 
 
-                for (Author author : authorLinkedList) {
-                    authorCSVPrinter.printRecord(author.convertToCommaDelimitedArray());
+                    for (Author author : authorLinkedList) {
+                        authorCSVPrinter.printRecord(author.convertToCommaDelimitedArray());
+                    }
+
+                    //authorCSVPrinter.flush();
+                } catch (IOException e) {
+                    System.out.println("Error writing LibraryUser.csv: " + e.getMessage());
                 }
-
-                authorCSVPrinter.flush();
-            }
-            else{
+            }else{
                 System.out.println("No Authors to save to file.");
             }
 
 
             if(!this.getLoanLinkedList().isEmpty()){
-                BufferedWriter loanWriter = Files.newBufferedWriter(loanFile.toPath());
-                CSVPrinter loanCSVPrinter = new CSVPrinter(loanWriter, CSVFormat.DEFAULT);
+                try (BufferedWriter loanWriter = Files.newBufferedWriter(loanFile.toPath());
+                    CSVPrinter loanCSVPrinter = new CSVPrinter(loanWriter, CSVFormat.DEFAULT)){
 
 
-                for (Loan loan : loanLinkedList) {
-                    loanCSVPrinter.printRecord(loan.convertToCommaDelimitedArray());
+                    for (Loan loan : loanLinkedList) {
+                        loanCSVPrinter.printRecord(loan.convertToCommaDelimitedArray());
+                    }
+
+                    //loanCSVPrinter.flush();
+                } catch (IOException e) {
+                    System.out.println("Error writing Loans.csv: " + e.getMessage());
                 }
-
-                loanCSVPrinter.flush();
-            }
-            else{
+            }else{
                 System.out.println("No Loans to save to file.");
             }
 
-        }
-        catch(IOException ioException){
-            System.out.println("Problem encountered while saving");
-            System.out.println(ioException.getMessage());
-            System.out.println(ioException.toString());
-        }
+        
     }
 }
