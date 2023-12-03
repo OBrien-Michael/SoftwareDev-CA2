@@ -54,6 +54,7 @@ public class Catalogue {
         this.loanLinkedList = loanLinkedList;
     }
 
+    //setters and getters
     public LinkedList<LibraryUser> getLibraryUserLinkedList() {
         return libraryUserLinkedList;
     }
@@ -547,7 +548,13 @@ public class Catalogue {
     }
 
     public void listAllItemsByAuthorName() {
-        System.out.println("TODO");
+        if(!this.getAuthorLinkedList().isEmpty()){
+            for(Author author : this.getAuthorLinkedList()){
+                author.displaySummaryDetails();
+            }
+        }else {
+        System.out.println("No authors have been added to the library.");
+        }
     }
 
     public void listAvailableItems() {
