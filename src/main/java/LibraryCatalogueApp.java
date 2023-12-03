@@ -17,14 +17,14 @@ public class LibraryCatalogueApp {
     // Date format for user input
     static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         appMainMenu();
     }
 
 
     //Main menu for the application
-    private static void appMainMenu(){
+    private static void appMainMenu() {
         // Attempt to load library data from CSV files
         System.out.println("Attempting to load library data from CSV files...");
         libraryCatalogue.loadCatalogue();
@@ -75,7 +75,7 @@ public class LibraryCatalogueApp {
 
 
     //Library User Menu
-    private static void appLibraryUserMenu(){
+    private static void appLibraryUserMenu() {
         while (true) {
             System.out.println("--------------------");
             System.out.println("\nLibrary User Menu:");
@@ -120,8 +120,9 @@ public class LibraryCatalogueApp {
             }
         }
     }
+
     //Create a new Library User
-    private static void createNewLibraryUserMenu(){
+    private static void createNewLibraryUserMenu() {
 
         System.out.println("\nPlease enter your name: ");
 
@@ -129,13 +130,13 @@ public class LibraryCatalogueApp {
 
         libraryCatalogue.addNewLibraryUser(userName);
 
-        System.out.println("New account created for: "+libraryCatalogue.getLibraryUserLinkedList().getLast().getLibraryUserName()+", " +
-                "User Id is:"+libraryCatalogue.getLibraryUserLinkedList().getLast().getLibraryUserId()+"\n\n");
+        System.out.println("New account created for: " + libraryCatalogue.getLibraryUserLinkedList().getLast().getLibraryUserName() + ", " +
+                "User Id is:" + libraryCatalogue.getLibraryUserLinkedList().getLast().getLibraryUserId() + "\n\n");
     }
 
     private static void displayLibraryItemsMenu() {
         //menu for the user when is displaying items.
-        while(true){
+        while (true) {
             System.out.println("\nDisplay Items:");
             System.out.println("----------------");
             System.out.println("1. List all items");
@@ -151,7 +152,7 @@ public class LibraryCatalogueApp {
             System.out.println("11. Return to main menu.");
 
 
-            try{
+            try {
                 int choice = Integer.parseInt(userInput.nextLine());
                 switch (choice) {
                     case 1:
@@ -194,6 +195,7 @@ public class LibraryCatalogueApp {
             }
         }
     }
+
     private static void loanItemMenu() {
 
         System.out.println("\nCreate a new Loan:");
@@ -205,7 +207,7 @@ public class LibraryCatalogueApp {
             System.out.println("Please enter the Item ID you would like to borrow:");
             int libraryItemId = Integer.parseInt(userInput.nextLine());         // Get library item ID
 
-            libraryCatalogue.createNewLoanById(libraryUserId,libraryItemId);    // Create a new loan by library user ID and item ID
+            libraryCatalogue.createNewLoanById(libraryUserId, libraryItemId);    // Create a new loan by library user ID and item ID
         } catch (NumberFormatException e) {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
@@ -218,7 +220,7 @@ public class LibraryCatalogueApp {
         System.out.println("\nReturning an Item to the Library:");
 
         System.out.println("Please enter the Item ID you would like to return:");
-        try{
+        try {
             int libraryItemId = Integer.parseInt(userInput.nextLine());         // Get library item ID
 
             libraryCatalogue.returnItemById(libraryItemId);                     // Return item by library item ID
@@ -227,6 +229,7 @@ public class LibraryCatalogueApp {
         }
 
     }
+
     // return Item sub Menu
     private static void searchForLibraryItemMenu() {
         System.out.println("\nSearch for a Library Item:");
@@ -246,7 +249,6 @@ public class LibraryCatalogueApp {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
 
 
     private static void checkLibraryUserMenu() {
@@ -332,6 +334,7 @@ public class LibraryCatalogueApp {
             }
         }
     }
+
     //Functions that removing user from the Library system.
     private static void removeLibraryUserMenu() {
         System.out.println("\nPlease enter the Library Users Id you wish to remove: ");
@@ -357,6 +360,7 @@ public class LibraryCatalogueApp {
         libraryCatalogue.addNewAuthor(authorName);
 
     }
+
     // This method prompts the user to enter the author ID of the author they want to remove
     private static void removeAuthorMenu() {
         System.out.println("\nPlease enter the Authors Id you wish to remove: ");
@@ -371,6 +375,7 @@ public class LibraryCatalogueApp {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
+
     //Menu to add new library item
     private static void addNewLibraryItemMenu() {
 
@@ -419,6 +424,7 @@ public class LibraryCatalogueApp {
 
 
     }
+
     //section for the new book with restrictions of 13 dig number .
     private static void addNewBookMenu() {
         System.out.println("Please enter the Title of the Book:");
@@ -431,7 +437,7 @@ public class LibraryCatalogueApp {
         //while loop for correct entry of the 13 numbers
         while (true) {
             System.out.println("Please enter the ISBN of the Book (13 digits):"); // Prompt the user to enter the 13 dig ISBN
-            bookIsbn = userInput.nextLine();                                      //Store the ISBN number
+            bookIsbn = userInput.nextLine();                                      //Store the number
             if (isValidIsbn(bookIsbn)) {
                 break;
             }
@@ -445,8 +451,9 @@ public class LibraryCatalogueApp {
     private static boolean isValidIsbn(String isbn) {            //boolean till 13 numbers will match.
         return isbn.matches("\\d{13}");
     }
-        private static void addNewAudioBookMenu() {
-            // Method to add a new audiobook to the library catalogue
+
+    private static void addNewAudioBookMenu() {
+        // Method to add a new audiobook to the library catalogue
         try {
             System.out.println("Please enter the Title of the AudioBook:");     // Prompt the user to enter the title of the audiobook
             String audioBookTitle = userInput.nextLine();                       // Store the title
@@ -459,12 +466,13 @@ public class LibraryCatalogueApp {
 
 
             // Add the new audiobook to the library catalogue
-            libraryCatalogue.addNewAudioBook(audioBookTitle,audioBookAuthorId,audioBookIsbn);
+            libraryCatalogue.addNewAudioBook(audioBookTitle, audioBookAuthorId, audioBookIsbn);
         } catch (NumberFormatException e) {
             //exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
+
     // Method to add a new CD to the library catalogue
     private static void addNewCDMenu() {
 
@@ -479,13 +487,14 @@ public class LibraryCatalogueApp {
             System.out.println("Please enter the Playtime of the CD:"); //Asks user to enter the playtime of the CD
             int cdPlaytime = Integer.parseInt(userInput.nextLine());    // Store the playtime
 
-            libraryCatalogue.addNewCD(cdTitle,cdAuthorId,cdPlaytime);   // Add the new CD to the library catalogue
+            libraryCatalogue.addNewCD(cdTitle, cdAuthorId, cdPlaytime);   // Add the new CD to the library catalogue
 
         } catch (NumberFormatException e) {
             // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
+
     // Method to add a new DVD to the library catalogue
     private static void addNewDVDMenu() {
 
@@ -499,12 +508,13 @@ public class LibraryCatalogueApp {
             System.out.println("Please enter the Playtime of the DVD:");// Prompt the user to enter the playtime of the DVD
             int dvdPlaytime = Integer.parseInt(userInput.nextLine());   // Store the playtime
 
-            libraryCatalogue.addNewDVD(dvdTitle,dvdAuthorId,dvdPlaytime);           // Add the new DVD to the library catalogue
+            libraryCatalogue.addNewDVD(dvdTitle, dvdAuthorId, dvdPlaytime);           // Add the new DVD to the library catalogue
         } catch (NumberFormatException e) {
             // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
+
     // Method to add a new thesis to the library catalogue
     private static void addNewThesesMenu() {
 
@@ -530,10 +540,11 @@ public class LibraryCatalogueApp {
         } catch (NumberFormatException e) {
             // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
-        } catch (DateTimeParseException dateTimeParseException){
+        } catch (DateTimeParseException dateTimeParseException) {
             System.out.println("Invalid entry. Please enter the date in the valid format of **/**/****");
         }
     }
+
     // Method to add a new dissertation to the library catalogue
     private static void addNewDissertationMenu() {
 
@@ -552,14 +563,14 @@ public class LibraryCatalogueApp {
 
             System.out.println("Please enter the Date the Dissertation was published:");    // Prompt the user to enter the publication date of the dissertation
             System.out.println("(DD/MM/YYYY)");
-            LocalDate dissertationDatePublished = LocalDate.parse(userInput.nextLine(),dateFormatter);  // Store the publication date
+            LocalDate dissertationDatePublished = LocalDate.parse(userInput.nextLine(), dateFormatter);  // Store the publication date
 
             // Add the new dissertation to the library catalogue
-            libraryCatalogue.addNewDissertation(dissertationTitle,dissertationAuthorId,dissertationTopic,dissertationAbstractText,dissertationDatePublished);
+            libraryCatalogue.addNewDissertation(dissertationTitle, dissertationAuthorId, dissertationTopic, dissertationAbstractText, dissertationDatePublished);
         } catch (NumberFormatException e) {
             // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
-        } catch (DateTimeParseException dateTimeParseException){
+        } catch (DateTimeParseException dateTimeParseException) {
             // Handle the exception if the date is not in the valid format
             System.out.println("Invalid entry. Please enter the date in the valid format of **/**/****");
         }
@@ -578,12 +589,14 @@ public class LibraryCatalogueApp {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
+
     // Method to display all details of the authors in the library catalogue
     private static void displayAuthorDataMenu() {
         // Display all author details
         System.out.println("\nDisplaying all details of the Authors from our Library:");
         libraryCatalogue.listAllAuthorsAllDetails();
     }
+
     // Method to save or load the library catalogue
     private static void saveAndLoadFunctionMenu() {
         //short menu for save and load od the Catalogue
@@ -611,18 +624,18 @@ public class LibraryCatalogueApp {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
+
     // Method to generate a report of borrowed items in the library catalogue
     private static void generateBorrowedItemsReportMenu() {             // Generate and display the report of borrowed items
 
         libraryCatalogue.generateBorrowedItemsReport();
 
     }
+
     // Method to generate a report of overdue items in the library catalogue
     private static void generateOverdueItemsReportMenu() {              // Generate and display the report of overdue items
 
         libraryCatalogue.generateOverdueItemsReport();
 
     }
-
-
 }
