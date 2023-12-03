@@ -286,88 +286,92 @@ public class LibraryCatalogueApp {
                 int choice = Integer.parseInt(userInput.nextLine());
                 switch (choice) {
                     case 1:
-                        createNewLibraryUserMenu();
+                        createNewLibraryUserMenu();             //Creates new library user
                         break;
                     case 2:
-                        removeLibraryUserMenu();
+                        removeLibraryUserMenu();                //Removing user
                         break;
                     case 3:
-                        addNewAuthorMenu();
+                        addNewAuthorMenu();                     //Adding new Author
                         break;
                     case 4:
-                        removeAuthorMenu();
+                        removeAuthorMenu();                     //Removes Author
                         break;
                     case 5:
-                        addNewLibraryItemMenu();
+                        addNewLibraryItemMenu();                //Adding new Item to Library
                         break;
                     case 6:
-                        removeLibraryItemMenu();
+                        removeLibraryItemMenu();                //Removing Item
                         break;
                     case 7:
-                        displayLibraryItemsMenu();
+                        displayLibraryItemsMenu();              //Displays Item Menu
                         break;
                     case 8:
-                        searchForLibraryItemMenu();
+                        searchForLibraryItemMenu();            //Using search option to display item
                         break;
                     case 9:
-                        displayAuthorDataMenu();
+                        displayAuthorDataMenu();               //Generates Authors list and display them
                         break;
                     case 10:
-                        saveAndLoadFunctionMenu();
+                        saveAndLoadFunctionMenu();             //Options to save and load
                         break;
                     case 11:
-                        generateBorrowedItemsReportMenu();
+                        generateBorrowedItemsReportMenu();     //Display and generates Loan list
                         break;
                     case 12:
-                        generateOverdueItemsReportMenu();
+                        generateOverdueItemsReportMenu();      //Generates list of overdue Items
                         break;
                     case 13:
-                        return;
+                        return;                                //Returns to Menu
                     default:
                         System.out.println("Invalid choice. Please try again.");
                 }
+                // Exception to catch incorrect input from the console.
             } catch (NumberFormatException e) {
                 System.out.println("Invalid entry. Please enter a valid number" + ".");
             }
         }
     }
-
+    //Functions that removing user from the Library system.
     private static void removeLibraryUserMenu() {
         System.out.println("\nPlease enter the Library Users Id you wish to remove: ");
 
         try {
-            int libraryUserId = Integer.parseInt(userInput.nextLine());
+            int libraryUserId = Integer.parseInt(userInput.nextLine());    //searching for the user with specific ID
 
-            libraryCatalogue.removeLibraryUserById(libraryUserId);
+            libraryCatalogue.removeLibraryUserById(libraryUserId);        // removing user from the list
         } catch (NumberFormatException e) {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
 
     }
 
-
+    // This method prompts the user to enter the name of the author that they wish to add
     private static void addNewAuthorMenu() {
 
         System.out.println("\nPlease enter the Authors name you wish to add: ");
 
         String authorName = userInput.nextLine();
 
+        // Calls the addNewAuthor method in the libraryCatalogue object to add the author.
         libraryCatalogue.addNewAuthor(authorName);
 
     }
-
+    // This method prompts the user to enter the author ID of the author they want to remove
     private static void removeAuthorMenu() {
         System.out.println("\nPlease enter the Authors Id you wish to remove: ");
 
         try {
             int authorId = Integer.parseInt(userInput.nextLine());
 
+            // Calls the removeAuthorById method in the libraryCatalogue object to remove the author.
             libraryCatalogue.removeAuthorById(authorId);
+            //Exception to catch in correct entry
         } catch (NumberFormatException e) {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
+    //Menu to add new library item
     private static void addNewLibraryItemMenu() {
 
         System.out.println("Add new Library Item Menu:");
@@ -384,28 +388,31 @@ public class LibraryCatalogueApp {
             int choice = Integer.parseInt(userInput.nextLine());
             switch (choice) {
                 case 1:
-                    addNewBookMenu();
+                    addNewBookMenu();           //option to add book
                     break;
                 case 2:
-                    addNewAudioBookMenu();
+                    addNewAudioBookMenu();      //option to add Audiobook
                     break;
                 case 3:
-                    addNewCDMenu();
+                    addNewCDMenu();             //option to add CD
                     break;
                 case 4:
-                    addNewDVDMenu();
+                    addNewDVDMenu();            //option to add DVD
                     break;
                 case 5:
-                    addNewThesesMenu();
+                    addNewThesesMenu();         //option to add Theses
                     break;
                 case 6:
-                    addNewDissertationMenu();
+                    addNewDissertationMenu();   // Option to add Dissertation
                     break;
                 case 7:
-                    return;
+                    return;                     //Return to last menu
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+
+            //exception to catch incorrect entry
+
         } catch (NumberFormatException e) {
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
@@ -421,97 +428,107 @@ public class LibraryCatalogueApp {
         int bookAuthorId = Integer.parseInt(userInput.nextLine());
 
         String bookIsbn;
+        //while loop for correct entry of the 13 numbers
         while (true) {
             System.out.println("Please enter the ISBN of the Book (13 digits):");
             bookIsbn = userInput.nextLine();
             if (isValidIsbn(bookIsbn)) {
                 break;
             }
+            //system message when entry is incorrect
             System.out.println("Invalid ISBN. The ISBN must be a 13-digit integer.");
         }
 
         libraryCatalogue.addNewBook(bookTitle, bookAuthorId, bookIsbn);
     }
 
-    private static boolean isValidIsbn(String isbn) {
+    private static boolean isValidIsbn(String isbn) {            //boolean till 13 numbers will match.
         return isbn.matches("\\d{13}");
     }
-    private static void addNewAudioBookMenu() {
-
+        private static void addNewAudioBookMenu() {
+            // Method to add a new audiobook to the library catalogue
         try {
-            System.out.println("Please enter the Title of the AudioBook:");
-            String audioBookTitle = userInput.nextLine();
+            System.out.println("Please enter the Title of the AudioBook:");     // Prompt the user to enter the title of the audiobook
+            String audioBookTitle = userInput.nextLine();                       // Store the title
 
-            System.out.println("Please enter the Authors Id:");
-            int audioBookAuthorId = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Authors Id:");                 // Prompt the user to enter the author's ID
+            int audioBookAuthorId = Integer.parseInt(userInput.nextLine());     // Store the author's ID
 
-            System.out.println("Please enter the ISBN of the AudioBook:");
-            String audioBookIsbn = userInput.nextLine();
+            System.out.println("Please enter the ISBN of the AudioBook:");      // Prompt the user to enter the ISBN of the audiobook
+            String audioBookIsbn = userInput.nextLine();                        // Store the ISBN
 
 
+            // Add the new audiobook to the library catalogue
             libraryCatalogue.addNewAudioBook(audioBookTitle,audioBookAuthorId,audioBookIsbn);
         } catch (NumberFormatException e) {
+            //exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
+    // Method to add a new CD to the library catalogue
     private static void addNewCDMenu() {
 
         try {
-            System.out.println("Please enter the Title of the CD:");
-            String cdTitle = userInput.nextLine();
 
-            System.out.println("Please enter the Authors Id:");
-            int cdAuthorId = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Title of the CD:");    // Prompt the user to enter the title of the CD
+            String cdTitle = userInput.nextLine();                      // Store the title
 
-            System.out.println("Please enter the Playtime of the CD:");
-            int cdPlaytime = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Authors Id:");         //Asks user for ID of Author
+            int cdAuthorId = Integer.parseInt(userInput.nextLine());    // Store the author's ID
 
-            libraryCatalogue.addNewCD(cdTitle,cdAuthorId,cdPlaytime);
+            System.out.println("Please enter the Playtime of the CD:"); //Asks user to enter the playtime of the CD
+            int cdPlaytime = Integer.parseInt(userInput.nextLine());    // Store the playtime
+
+            libraryCatalogue.addNewCD(cdTitle,cdAuthorId,cdPlaytime);   // Add the new CD to the library catalogue
+
         } catch (NumberFormatException e) {
+            // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
+    // Method to add a new DVD to the library catalogue
     private static void addNewDVDMenu() {
 
         try {
-            System.out.println("Please enter the Title of the DVD:");
-            String dvdTitle = userInput.nextLine();
+            System.out.println("Please enter the Title of the DVD:");   // Prompt the user to enter the title of the DVD
+            String dvdTitle = userInput.nextLine();                     // Store the title
 
-            System.out.println("Please enter the Authors Id:");
-            int dvdAuthorId = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Authors Id:");         // Prompt the user to enter the author's ID
+            int dvdAuthorId = Integer.parseInt(userInput.nextLine());   // Store the author's ID
 
-            System.out.println("Please enter the Playtime of the DVD:");
-            int dvdPlaytime = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Playtime of the DVD:");// Prompt the user to enter the playtime of the DVD
+            int dvdPlaytime = Integer.parseInt(userInput.nextLine());   // Store the playtime
 
-            libraryCatalogue.addNewDVD(dvdTitle,dvdAuthorId,dvdPlaytime);
+            libraryCatalogue.addNewDVD(dvdTitle,dvdAuthorId,dvdPlaytime);           // Add the new DVD to the library catalogue
         } catch (NumberFormatException e) {
+            // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
+    // Method to add a new thesis to the library catalogue
     private static void addNewThesesMenu() {
 
         try {
-            System.out.println("Please enter the Title of the Theses:");
-            String thesesTitle = userInput.nextLine();
+            System.out.println("Please enter the Title of the Theses:");     //Asks user to enter the title of the thesis
+            String thesesTitle = userInput.nextLine();                       // Store the title
 
-            System.out.println("Please enter the Authors Id:");
-            int thesesAuthorId = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Authors Id:");              // Prompt the user to enter the author's ID
+            int thesesAuthorId = Integer.parseInt(userInput.nextLine());     // Store the author's
 
-            System.out.println("Please enter the Topic of the Theses:");
-            String thesesTopic = userInput.nextLine();
+            System.out.println("Please enter the Topic of the Theses:");     // Prompt the user to enter the topic of the thesis
+            String thesesTopic = userInput.nextLine();                       // Store the topic
 
-            System.out.println("Please enter the Abstract of the Theses:");
-            String thesesAbstractText = userInput.nextLine();
+            System.out.println("Please enter the Abstract of the Theses:");         // Prompt the user to enter the abstract of the thesis
+            String thesesAbstractText = userInput.nextLine();                       // Store the abstract text
 
-            System.out.println("Please enter the Date the Theses was published:");
+            System.out.println("Please enter the Date the Theses was published:");  // Prompt the user to enter the publication date of the thesis
             System.out.println("(DD/MM/YYYY)");
-            LocalDate thesesDatePublished = LocalDate.parse(userInput.nextLine(), dateFormatter);
+            LocalDate thesesDatePublished = LocalDate.parse(userInput.nextLine(), dateFormatter);   // Store the publication date
 
+            // Add the new thesis to the library catalogue
             libraryCatalogue.addNewTheses(thesesTitle, thesesAuthorId, thesesTopic, thesesAbstractText, thesesDatePublished);
         } catch (NumberFormatException e) {
+            // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         } catch (DateTimeParseException dateTimeParseException){
             System.out.println("Invalid entry. Please enter the date in the valid format of **/**/****");
