@@ -983,18 +983,13 @@ public class Catalogue {
         }
 
 
-        for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
-            libraryItem.displayAllDetails();
-        }
 
 
+        //Attempt to sort the libraryItemLinkedList
         if(!this.getLibraryItemLinkedList().isEmpty()){
             libraryItemSort(this.getLibraryItemLinkedList());
         }
 
-        for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
-            libraryItem.displayAllDetails();
-        }
 
     }
 
