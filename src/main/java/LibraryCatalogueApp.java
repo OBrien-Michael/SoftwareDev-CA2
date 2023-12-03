@@ -430,8 +430,8 @@ public class LibraryCatalogueApp {
         String bookIsbn;
         //while loop for correct entry of the 13 numbers
         while (true) {
-            System.out.println("Please enter the ISBN of the Book (13 digits):");
-            bookIsbn = userInput.nextLine();
+            System.out.println("Please enter the ISBN of the Book (13 digits):"); // Prompt the user to enter the 13 dig ISBN
+            bookIsbn = userInput.nextLine();                                      //Store the ISBN number
             if (isValidIsbn(bookIsbn)) {
                 break;
             }
@@ -534,87 +534,91 @@ public class LibraryCatalogueApp {
             System.out.println("Invalid entry. Please enter the date in the valid format of **/**/****");
         }
     }
-
+    // Method to add a new dissertation to the library catalogue
     private static void addNewDissertationMenu() {
 
         try {
-            System.out.println("Please enter the Title of the Dissertation:");
-            String dissertationTitle = userInput.nextLine();
+            System.out.println("Please enter the Title of the Dissertation:");      // Prompt the user to enter the title of the dissertation
+            String dissertationTitle = userInput.nextLine();                        // Store the title
 
-            System.out.println("Please enter the Authors Id:");
-            int dissertationAuthorId = Integer.parseInt(userInput.nextLine());
+            System.out.println("Please enter the Authors Id:");                     // Asks the user to enter the author's ID
+            int dissertationAuthorId = Integer.parseInt(userInput.nextLine());      // Store the author's ID
 
-            System.out.println("Please enter the Topic of the Dissertation:");
-            String dissertationTopic = userInput.nextLine();
+            System.out.println("Please enter the Topic of the Dissertation:");      // Prompt the user to enter the topic of the dissertation
+            String dissertationTopic = userInput.nextLine();                        // Store the topic
 
-            System.out.println("Please enter the Abstract of the Dissertation:");
-            String dissertationAbstractText = userInput.nextLine();
+            System.out.println("Please enter the Abstract of the Dissertation:");    // Prompt the user to enter the abstract of the dissertation
+            String dissertationAbstractText = userInput.nextLine();                  // Store the abstract text
 
-            System.out.println("Please enter the Date the Dissertation was published:");
+            System.out.println("Please enter the Date the Dissertation was published:");    // Prompt the user to enter the publication date of the dissertation
             System.out.println("(DD/MM/YYYY)");
-            LocalDate dissertationDatePublished = LocalDate.parse(userInput.nextLine(),dateFormatter);
+            LocalDate dissertationDatePublished = LocalDate.parse(userInput.nextLine(),dateFormatter);  // Store the publication date
 
-
+            // Add the new dissertation to the library catalogue
             libraryCatalogue.addNewDissertation(dissertationTitle,dissertationAuthorId,dissertationTopic,dissertationAbstractText,dissertationDatePublished);
         } catch (NumberFormatException e) {
+            // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         } catch (DateTimeParseException dateTimeParseException){
+            // Handle the exception if the date is not in the valid format
             System.out.println("Invalid entry. Please enter the date in the valid format of **/**/****");
         }
     }
 
-
+    // Method to remove an item from the library catalogue using its ID
     private static void removeLibraryItemMenu() {
         try {
-            System.out.println("\nPlease enter the Library Items Id you wish to remove: ");
+            System.out.println("\nPlease enter the Library Items Id you wish to remove: "); // Prompt the user to enter the ID of the library item to remove
 
-            int libraryItemId = Integer.parseInt(userInput.nextLine());
+            int libraryItemId = Integer.parseInt(userInput.nextLine());           // Store entry of the item ID
 
-            libraryCatalogue.removeLibraryItemById(libraryItemId);
+            libraryCatalogue.removeLibraryItemById(libraryItemId);                // Remove the library item by its ID
         } catch (NumberFormatException e) {
+            // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
+    // Method to display all details of the authors in the library catalogue
     private static void displayAuthorDataMenu() {
-
+        // Display all author details
         System.out.println("\nDisplaying all details of the Authors from our Library:");
         libraryCatalogue.listAllAuthorsAllDetails();
     }
-
+    // Method to save or load the library catalogue
     private static void saveAndLoadFunctionMenu() {
-
-        System.out.println("\nWould you like to Save or Load the catalogue?");
+        //short menu for save and load od the Catalogue
+        System.out.println("\nWould you like to Save or Load the catalogue?");  // Prompt the user to choose between saving or loading the catalogue
         System.out.println("1. Save Catalogue");
         System.out.println("2. Load Catalogue");
         System.out.println("3. Return to Librarian Menu");
 
         try {
-            int choice = Integer.parseInt(userInput.nextLine());
+            int choice = Integer.parseInt(userInput.nextLine());        // Store the user's choice
             switch (choice) {
                 case 1:
-                    libraryCatalogue.saveCatalogue();
+                    libraryCatalogue.saveCatalogue();                   // Save the current state of the library catalogue
                     break;
                 case 2:
-                    libraryCatalogue.loadCatalogue();
+                    libraryCatalogue.loadCatalogue();                   // Load a previously saved state of the library catalogue
                     break;
                 case 3:
-                    return;
+                    return;                                             // Return to the previous menu
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         } catch (NumberFormatException e) {
+            // Handle the exception if the input is not a valid number
             System.out.println("Invalid entry. Please enter a valid number" + ".");
         }
     }
-
-    private static void generateBorrowedItemsReportMenu() {
+    // Method to generate a report of borrowed items in the library catalogue
+    private static void generateBorrowedItemsReportMenu() {             // Generate and display the report of borrowed items
 
         libraryCatalogue.generateBorrowedItemsReport();
 
     }
-
-    private static void generateOverdueItemsReportMenu() {
+    // Method to generate a report of overdue items in the library catalogue
+    private static void generateOverdueItemsReportMenu() {              // Generate and display the report of overdue items
 
         libraryCatalogue.generateOverdueItemsReport();
 
