@@ -1,5 +1,5 @@
 package library;
-
+// Importing necessary classes, exceptions, interfaces, and other packages
 import library.abstracts.LibraryItem;
 import library.exceptions.AuthorException;
 import library.exceptions.LibraryItemException;
@@ -21,8 +21,15 @@ import java.util.LinkedList;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * The Catalogue class manages the library's catalogue, including users, authors, items, and loans.
+ */
+
+
+
 public class Catalogue {
 
+    // Constants for overdue days and file paths
     private static final int daysOverdue = 7;
 
     private static final File libraryUserFile = new File("LibraryUser.csv");
@@ -35,11 +42,14 @@ public class Catalogue {
     private static final File cdFile = new File("CD.csv");
     private static final File dvdFile = new File("DVD.csv");
 
+
+    // LinkedLists to store various entities in the library system
     private LinkedList<LibraryUser> libraryUserLinkedList;
     private LinkedList<Author> authorLinkedList;
     private LinkedList<LibraryItem> libraryItemLinkedList;
     private LinkedList<Loan> loanLinkedList;
 
+    // Default constructor initializing the LinkedLists
     public Catalogue() {
         this.libraryUserLinkedList = new LinkedList<>();
         this.authorLinkedList = new LinkedList<>();
@@ -47,6 +57,7 @@ public class Catalogue {
         this.loanLinkedList = new LinkedList<>();
     }
 
+    // Parameterized constructor for initializing the Catalogue with existing LinkedLists
     public Catalogue(LinkedList<LibraryUser> libraryUserLinkedList, LinkedList<Author> authorLinkedList, LinkedList<LibraryItem> libraryItemLinkedList, LinkedList<Loan> loanLinkedList) {
         this.libraryUserLinkedList = libraryUserLinkedList;
         this.authorLinkedList = authorLinkedList;
