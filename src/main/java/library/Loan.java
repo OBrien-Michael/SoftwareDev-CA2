@@ -2,6 +2,7 @@ package library;
 
 
 import library.abstracts.LibraryItem;
+import library.exceptions.LoanException;
 import library.interfaces.Printable;
 import library.interfaces.Saveable;
 
@@ -10,25 +11,25 @@ import java.util.ArrayList;
 
 public class Loan implements Printable, Saveable,Comparable<Loan>{
 
-    private LibraryUser libraryUser;
-    private LibraryItem libraryItem;
+    private int libraryUserId;
+    private int libraryItemId;
     private LocalDate dateBorrowed;
     private LocalDate dateReturned;
 
-    public LibraryUser getLibraryUser() {
-        return libraryUser;
+    public int getLibraryUserId() {
+        return libraryUserId;
     }
 
-    public void setLibraryUser(LibraryUser libraryUser) {
-        this.libraryUser = libraryUser;
+    public void setLibraryUserId(int libraryUserId) {
+        this.libraryUserId = libraryUserId;
     }
 
-    public LibraryItem getLibraryItem() {
-        return libraryItem;
+    public int getLibraryItemId() {
+        return libraryItemId;
     }
 
-    public void setLibraryItem(LibraryItem libraryItem) {
-        this.libraryItem = libraryItem;
+    public void setLibraryItemId(int libraryItemId) {
+        this.libraryItemId = libraryItemId;
     }
 
     public LocalDate getDateBorrowed() {
@@ -43,32 +44,36 @@ public class Loan implements Printable, Saveable,Comparable<Loan>{
         return dateReturned;
     }
 
-    public void setDateReturned(LocalDate dateReturned) {
-        this.dateReturned = dateReturned;
+    public void setDateReturned(LocalDate dateReturned) throws LoanException {
+        if(this.getDateBorrowed().isEqual(dateReturned) || this.getDateBorrowed().isBefore(dateReturned)){
+            this.dateReturned = dateReturned;
+        }
+        else{
+            throw new LoanException("Returned date cannot be before the date the item was borrowed");
+        }
     }
 
     public Loan() {
     }
 
-    public Loan(LibraryUser libraryUser, LibraryItem libraryItem, LocalDate dateBorrowed) {
-        this.libraryUser = libraryUser;
-        this.libraryItem = libraryItem;
-        this.dateBorrowed = dateBorrowed;
-        this.dateReturned = null;
+    public Loan(int libraryUserId, int libraryItemId, LocalDate dateBorrowed) throws LoanException {
+        this.setLibraryUserId(libraryUserId);
+        this.setLibraryItemId(libraryItemId);
+        this.setDateBorrowed(dateBorrowed);
     }
 
-    public Loan(LibraryUser libraryUser, LibraryItem libraryItem, LocalDate dateBorrowed, LocalDate dateReturned) {
-        this.libraryUser = libraryUser;
-        this.libraryItem = libraryItem;
-        this.dateBorrowed = dateBorrowed;
-        this.dateReturned = dateReturned;
+    public Loan(int libraryUserId, int libraryItemId, LocalDate dateBorrowed, LocalDate dateReturned) throws LoanException {
+        this.setLibraryUserId(libraryUserId);
+        this.setLibraryItemId(libraryItemId);
+        this.setDateBorrowed(dateBorrowed);
+        this.setDateReturned(dateReturned);
     }
 
     @Override
     public String toString() {
         return "Loan{" +
-                "libraryUser=" + libraryUser +
-                ", libraryItem=" + libraryItem +
+                "libraryUserId=" + libraryUserId +
+                ", libraryItemId=" + libraryItemId +
                 ", dateBorrowed=" + dateBorrowed +
                 ", dateReturned=" + dateReturned +
                 '}';
@@ -82,24 +87,26 @@ public class Loan implements Printable, Saveable,Comparable<Loan>{
 
     @Override
     public void displayAllDetails() {
-        this.getLibraryUser().displayAllDetails();
-        this.getLibraryItem().displayAllDetails();
+        System.out.println("\nLibrary User Id: "+ this.getLibraryUserId());
+        System.out.println("Library Item Id: "+ this.getLibraryItemId());
         System.out.println("Date borrowed: "+ this.getDateBorrowed());
+        System.out.println("Date returned: "+ this.getDateReturned());
     }
 
     @Override
     public void displaySummaryDetails() {
-        this.getLibraryUser().displaySummaryDetails();
-        this.getLibraryItem().displaySummaryDetails();
+        System.out.println("\nLibrary User Id: "+ this.getLibraryUserId());
+        System.out.println("Library Item Id: "+ this.getLibraryItemId());
         System.out.println("Date borrowed: "+ this.getDateBorrowed());
+        System.out.println("Date returned: "+ this.getDateReturned());
     }
 
     @Override
     public ArrayList<String> convertToCommaDelimitedArray() {
         ArrayList<String> csvRecord = new ArrayList<>();
 
-        csvRecord.add(String.valueOf(this.getLibraryUser().getLibraryUserId()));
-        csvRecord.add(String.valueOf(this.getLibraryItem().getLibraryItemId()));
+        csvRecord.add(String.valueOf(this.getLibraryUserId()));
+        csvRecord.add(String.valueOf(this.getLibraryItemId()));
         csvRecord.add(String.valueOf(this.getDateBorrowed()));
 
         if (this.getDateReturned() != null){

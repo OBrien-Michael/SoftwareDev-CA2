@@ -1,5 +1,7 @@
 package library.abstracts;
 
+import library.exceptions.LibraryItemException;
+
 public abstract class LiteratureItem extends LibraryItem{
 
     private String isbn;
@@ -8,16 +10,21 @@ public abstract class LiteratureItem extends LibraryItem{
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setIsbn(String isbn) throws LibraryItemException {
+        if(isbn.length() == 13){
+            this.isbn = isbn;
+        }
+        else {
+            throw new LibraryItemException("Error: ISBN must be exactly 13 characters.");
+        }
     }
 
     public LiteratureItem() {
     }
 
-    public LiteratureItem(int libraryItemId, String title, int authorId, boolean availability, String isbn) {
+    public LiteratureItem(int libraryItemId, String title, int authorId, boolean availability, String isbn) throws LibraryItemException {
         super(libraryItemId, title, authorId, availability);
-        this.isbn = isbn;
+        this.setIsbn(isbn);
     }
 
     @Override

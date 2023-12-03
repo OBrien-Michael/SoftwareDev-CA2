@@ -1,5 +1,7 @@
 package library.abstracts;
 
+import library.exceptions.LibraryItemException;
+
 import java.time.LocalDate;
 
 public abstract class ResearchItem extends LibraryItem {
@@ -12,16 +14,26 @@ public abstract class ResearchItem extends LibraryItem {
         return topic;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setTopic(String topic) throws LibraryItemException {
+        if(topic.length() > 2){
+            this.topic = topic;
+        }
+        else {
+            throw new LibraryItemException("Error: Topic must be greater than two characters.");
+        }
     }
 
     public String getAbstractText() {
         return abstractText;
     }
 
-    public void setAbstractText(String abstractText) {
-        this.abstractText = abstractText;
+    public void setAbstractText(String abstractText) throws LibraryItemException {
+        if(abstractText.length() > 2){
+            this.abstractText = abstractText;
+        }
+        else {
+            throw new LibraryItemException("Error: Abstract must be greater than two characters.");
+        }
     }
 
     public LocalDate getDatePublished() {
@@ -35,11 +47,11 @@ public abstract class ResearchItem extends LibraryItem {
     public ResearchItem() {
     }
 
-    public ResearchItem(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) {
+    public ResearchItem(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) throws LibraryItemException {
         super(libraryItemId, title, authorId, availability);
-        this.topic = topic;
-        this.abstractText = abstractText;
-        this.datePublished = datePublished;
+        this.setTopic(topic);
+        this.setAbstractText(abstractText);
+        this.setDatePublished(datePublished);
     }
 
     @Override

@@ -2,7 +2,7 @@
 2,Shadows of Eternity,12,9781234567906,true
 3,The Enchanted Garden,8,9781234567913,true
 4,Echoes of Destiny,16,9781234567920,true
-5,Chronicles of Midnight,3,9781234567937,true
+5,Chronicles of Midnight,3,9781234567937,false
 6,Silent Serenade,10,9781234567944,true
 7,Mysteries of Moonlight,7,9781234567951,true
 8,The Lost Lullaby,19,9781234567968,true
@@ -16,5 +16,4 @@
 16,Serenade of Secrets,9,9781234568040,true
 17,Wings of Destiny,11,9781234568057,true
 18,Ephemeral Echoes,18,9781234568064,true
-19,The Cursed Carousel,13,978134568071,true
-20,The Hidden Symphony,4,9781234568088,true
+26,Darkness,9,1234567890123,true

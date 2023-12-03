@@ -1,5 +1,6 @@
 package library.abstracts;
 
+import library.exceptions.LibraryItemException;
 import library.interfaces.Printable;
 import library.interfaces.Saveable;
 
@@ -22,16 +23,26 @@ public abstract class LibraryItem implements Printable, Saveable,Comparable<Libr
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String title) throws LibraryItemException {
+        if(!title.isEmpty()){
+            this.title = title;
+        }
+        else {
+            throw new LibraryItemException("Error: Item name must must be greater than 0 characters");
+        }
     }
 
     public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthorId(int authorId) throws LibraryItemException {
+        if(authorId > 0){
+            this.authorId = authorId;
+        }
+        else {
+            throw new LibraryItemException("Error: Author Id must be greater than 0.");
+        }
     }
 
     public boolean getAvailability() {
@@ -45,11 +56,11 @@ public abstract class LibraryItem implements Printable, Saveable,Comparable<Libr
     public LibraryItem() {
     }
 
-    public LibraryItem(int libraryItemId, String title, int authorId, boolean availability) {
-        this.libraryItemId = libraryItemId;
-        this.title = title;
-        this.authorId = authorId;
-        this.availability = availability;
+    public LibraryItem(int libraryItemId, String title, int authorId, boolean availability) throws LibraryItemException {
+        this.setLibraryItemId(libraryItemId);
+        this.setTitle(title);
+        this.setAuthorId(authorId);
+        this.setAvailability(availability);
     }
 
     @Override

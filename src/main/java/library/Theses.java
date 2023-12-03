@@ -2,6 +2,7 @@ package library;
 
 import library.abstracts.LibraryItem;
 import library.abstracts.ResearchItem;
+import library.exceptions.LibraryItemException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Theses extends ResearchItem {
     public Theses() {
     }
 
-    public Theses(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) {
+    public Theses(int libraryItemId, String title, int authorId, boolean availability, String topic, String abstractText, LocalDate datePublished) throws LibraryItemException {
         super(libraryItemId, title, authorId, availability, topic, abstractText, datePublished);
     }
 

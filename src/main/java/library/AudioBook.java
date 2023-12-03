@@ -2,6 +2,7 @@ package library;
 
 import library.abstracts.LibraryItem;
 import library.abstracts.LiteratureItem;
+import library.exceptions.LibraryItemException;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class AudioBook extends LiteratureItem {
     public AudioBook() {
     }
 
-    public AudioBook(int libraryItemId, String title, int authorId, boolean availability, String isbn) {
+    public AudioBook(int libraryItemId, String title, int authorId, boolean availability, String isbn) throws LibraryItemException {
         super(libraryItemId, title, authorId, availability, isbn);
     }
 

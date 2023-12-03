@@ -2,6 +2,7 @@ package library;
 
 import library.abstracts.LibraryItem;
 import library.abstracts.MediaItem;
+import library.exceptions.LibraryItemException;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class CD extends MediaItem {
     public CD() {
     }
 
-    public CD(int libraryItemId, String title, int authorId, boolean availability, int playtime) {
+    public CD(int libraryItemId, String title, int authorId, boolean availability, int playtime) throws LibraryItemException {
         super(libraryItemId, title, authorId, availability, playtime);
     }
 
