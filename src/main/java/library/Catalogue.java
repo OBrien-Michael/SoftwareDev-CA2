@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -182,18 +181,18 @@ public class Catalogue {
     public void addNewAudioBook(String audioBookTitle, int audioBookAuthorId, String audioBookIsbn) {
         try {
             if (findAuthorById(audioBookAuthorId) != null) {
-            if (this.getLibraryItemLinkedList().isEmpty()) {
+                if (this.getLibraryItemLinkedList().isEmpty()) {
 
-                this.getLibraryItemLinkedList().add(new AudioBook(1, audioBookTitle, audioBookAuthorId, true, audioBookIsbn));
-                System.out.println("New AudioBook added to the catalogue: AudioBook Id: 1 AudioBook Title: " + audioBookTitle);
+                    this.getLibraryItemLinkedList().add(new AudioBook(1, audioBookTitle, audioBookAuthorId, true, audioBookIsbn));
+                    System.out.println("New AudioBook added to the catalogue: AudioBook Id: 1 AudioBook Title: " + audioBookTitle);
 
-            } else {
-                int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
+                } else {
+                    int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
 
-                this.getLibraryItemLinkedList().add(new AudioBook(nextLibraryItemId + 1, audioBookTitle, audioBookAuthorId, true, audioBookIsbn));
-                System.out.println("New AudioBook added to the catalogue: AudioBook Id: " + (nextLibraryItemId + 1) + " AudioBook Title: " + audioBookTitle);
+                    this.getLibraryItemLinkedList().add(new AudioBook(nextLibraryItemId + 1, audioBookTitle, audioBookAuthorId, true, audioBookIsbn));
+                    System.out.println("New AudioBook added to the catalogue: AudioBook Id: " + (nextLibraryItemId + 1) + " AudioBook Title: " + audioBookTitle);
 
-            }
+                }
             }else{
                 System.out.println("Author does not exist in the system.");
             }
@@ -206,17 +205,21 @@ public class Catalogue {
     //If there are library items, grab the last item ID and add 1 to it and add it to the catalogue.
     public void addNewDVD(String dvdTitle, int dvdAuthorId, int dvdPlaytime) {
         try {
-            if (this.getLibraryItemLinkedList().isEmpty()) {
+            if (findAuthorById(dvdAuthorId) != null) {
+                if (this.getLibraryItemLinkedList().isEmpty()) {
 
-                this.getLibraryItemLinkedList().add(new DVD(1, dvdTitle, dvdAuthorId, true, dvdPlaytime));
-                System.out.println("New DVD added to the catalogue: DVD Id: 1 DVD Title: " + dvdTitle);
+                    this.getLibraryItemLinkedList().add(new DVD(1, dvdTitle, dvdAuthorId, true, dvdPlaytime));
+                    System.out.println("New DVD added to the catalogue: DVD Id: 1 DVD Title: " + dvdTitle);
 
-            } else {
-                int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
+                } else {
+                    int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
 
-                this.getLibraryItemLinkedList().add(new DVD(nextLibraryItemId + 1, dvdTitle, dvdAuthorId, true, dvdPlaytime));
-                System.out.println("New DVD added to the catalogue: DVD Id: " + (nextLibraryItemId + 1) + " DVD Title: " + dvdTitle);
+                    this.getLibraryItemLinkedList().add(new DVD(nextLibraryItemId + 1, dvdTitle, dvdAuthorId, true, dvdPlaytime));
+                    System.out.println("New DVD added to the catalogue: DVD Id: " + (nextLibraryItemId + 1) + " DVD Title: " + dvdTitle);
 
+                }
+            }else{
+                System.out.println("Author does not exist in the system.");
             }
         } catch (LibraryItemException libraryItemException) {
             System.out.println(libraryItemException.getLibraryItemExceptionMessage());
@@ -227,19 +230,23 @@ public class Catalogue {
     //If there are library items, grab the last item ID and add 1 to it and add it to the catalogue.
     public void addNewCD(String cdTitle, int cdAuthorId, int cdPlaytime) {
         try {
-            if (this.getLibraryItemLinkedList().isEmpty()) {
+            if (findAuthorById(cdAuthorId) != null) {
+                if (this.getLibraryItemLinkedList().isEmpty()) {
 
-                this.getLibraryItemLinkedList().add(new CD(1, cdTitle, cdAuthorId, true, cdPlaytime));
-                System.out.println("New CD added to the catalogue: CD Id: 1 CD Title: " + cdTitle);
-
-
-            } else {
-                int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
-
-                this.getLibraryItemLinkedList().add(new CD(nextLibraryItemId + 1, cdTitle, cdAuthorId, true, cdPlaytime));
-                System.out.println("New CD added to the catalogue: CD Id: " + (nextLibraryItemId + 1) + " CD Title: " + cdTitle);
+                    this.getLibraryItemLinkedList().add(new CD(1, cdTitle, cdAuthorId, true, cdPlaytime));
+                    System.out.println("New CD added to the catalogue: CD Id: 1 CD Title: " + cdTitle);
 
 
+                } else {
+                    int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
+
+                    this.getLibraryItemLinkedList().add(new CD(nextLibraryItemId + 1, cdTitle, cdAuthorId, true, cdPlaytime));
+                    System.out.println("New CD added to the catalogue: CD Id: " + (nextLibraryItemId + 1) + " CD Title: " + cdTitle);
+
+
+                }
+            }else{
+                System.out.println("Author does not exist in the system.");
             }
         } catch (LibraryItemException libraryItemException) {
             System.out.println(libraryItemException.getLibraryItemExceptionMessage());
@@ -250,18 +257,22 @@ public class Catalogue {
     //If there are library items, grab the last item ID and add 1 to it and add it to the catalogue.
     public void addNewTheses(String thesesTitle, int thesesAuthorId, String thesesTopic, String thesesAbstractText, LocalDate thesesDatePublished) {
         try {
-            if (this.getLibraryItemLinkedList().isEmpty()) {
+            if (findAuthorById(thesesAuthorId) != null) {
+                if (this.getLibraryItemLinkedList().isEmpty()) {
 
-                this.getLibraryItemLinkedList().add(new Theses(1, thesesTitle, thesesAuthorId, true, thesesTopic, thesesAbstractText, thesesDatePublished));
-                System.out.println("New Theses added to the catalogue: Theses Id: 1 Theses Title: " + thesesTitle);
+                    this.getLibraryItemLinkedList().add(new Theses(1, thesesTitle, thesesAuthorId, true, thesesTopic, thesesAbstractText, thesesDatePublished));
+                    System.out.println("New Theses added to the catalogue: Theses Id: 1 Theses Title: " + thesesTitle);
 
-            } else {
-                int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
+                } else {
+                    int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
 
-                this.getLibraryItemLinkedList().add(new Theses(nextLibraryItemId + 1, thesesTitle, thesesAuthorId, true, thesesTopic, thesesAbstractText, thesesDatePublished));
-                System.out.println("New Theses added to the catalogue: Theses Id: " + (nextLibraryItemId + 1) + " Theses Title: " + thesesTitle);
+                    this.getLibraryItemLinkedList().add(new Theses(nextLibraryItemId + 1, thesesTitle, thesesAuthorId, true, thesesTopic, thesesAbstractText, thesesDatePublished));
+                    System.out.println("New Theses added to the catalogue: Theses Id: " + (nextLibraryItemId + 1) + " Theses Title: " + thesesTitle);
 
 
+                }
+            }else{
+                System.out.println("Author does not exist in the system.");
             }
         } catch (LibraryItemException libraryItemException) {
             System.out.println(libraryItemException.getLibraryItemExceptionMessage());
@@ -273,17 +284,21 @@ public class Catalogue {
     public void addNewDissertation(String dissertationTitle, int dissertationAuthorId, String dissertationTopic, String dissertationAbstractText, LocalDate dissertationDatePublished) {
 
         try {
-            if (this.getLibraryItemLinkedList().isEmpty()) {
+            if (findAuthorById(dissertationAuthorId) != null) {
+                if (this.getLibraryItemLinkedList().isEmpty()) {
 
-                this.getLibraryItemLinkedList().add(new Dissertation(1, dissertationTitle, dissertationAuthorId, true, dissertationTopic, dissertationAbstractText, dissertationDatePublished));
-                System.out.println("New Dissertation added to the catalogue: Dissertation Id: 1 Dissertation Title: " + dissertationTitle);
+                    this.getLibraryItemLinkedList().add(new Dissertation(1, dissertationTitle, dissertationAuthorId, true, dissertationTopic, dissertationAbstractText, dissertationDatePublished));
+                    System.out.println("New Dissertation added to the catalogue: Dissertation Id: 1 Dissertation Title: " + dissertationTitle);
 
-            } else {
-                int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
+                } else {
+                    int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
 
-                this.getLibraryItemLinkedList().add(new Dissertation(nextLibraryItemId + 1, dissertationTitle, dissertationAuthorId, true, dissertationTopic, dissertationAbstractText, dissertationDatePublished));
-                System.out.println("New Dissertation added to the catalogue: Dissertation Id: " + (nextLibraryItemId + 1) + " Dissertation Title: " + dissertationTitle);
+                    this.getLibraryItemLinkedList().add(new Dissertation(nextLibraryItemId + 1, dissertationTitle, dissertationAuthorId, true, dissertationTopic, dissertationAbstractText, dissertationDatePublished));
+                    System.out.println("New Dissertation added to the catalogue: Dissertation Id: " + (nextLibraryItemId + 1) + " Dissertation Title: " + dissertationTitle);
 
+                }
+            }else{
+                System.out.println("Author does not exist in the system.");
             }
         } catch (LibraryItemException libraryItemException) {
             System.out.println(libraryItemException.getLibraryItemExceptionMessage());
@@ -365,39 +380,38 @@ public class Catalogue {
     public void createNewLoanById(int libraryUserId, int libraryItemId) {
         try {
 
-            LibraryUser libraryUser = findLibraryUserById(libraryItemId);
+            LibraryUser libraryUser = findLibraryUserById(libraryUserId);
+            LibraryItem libraryItem = findLibraryItemById(libraryItemId);
             //Check to see if User exists
             if(libraryUser != null){
+                //Check to see if Library Item exists
+                if (libraryItem != null) {
+                    //Check to see if the item is available
+                    if (libraryItem.getAvailability()) {
+                        //Create the loan and add it to the linked list
+
+                        this.getLoanLinkedList().add(new Loan(libraryUserId, libraryItemId, LocalDate.now()));
 
 
-                    //Check to see if Library Item exists
-                    for (LibraryItem libraryItem : libraryItemLinkedList) {
-                        if (libraryItem.getLibraryItemId() == libraryItemId) {
-                            //Check to see if the item is available
-                            if (libraryItem.getAvailability()) {
-                                //Create the loan and add it to the linked list
+                        //Add the borrowed item to the library user object
+                        libraryUser.addNewBorrowedItem(libraryItem);
 
-                                this.getLoanLinkedList().add(new Loan(libraryUserId, libraryItemId, LocalDate.now()));
+                        //Set the availability to false
+                        libraryItem.setAvailability(false);
 
 
-                                //Add the borrowed item to the library user object
-                                libraryUser.addNewBorrowedItem(libraryItem);
-
-                                //Set the availability to false
-                                libraryItem.setAvailability(false);
+                        this.getLibraryUserLinkedList().set(this.getLibraryUserLinkedList().indexOf(libraryUser),libraryUser);
+                        this.getLibraryItemLinkedList().set(this.getLibraryItemLinkedList().indexOf(libraryItem),libraryItem);
 
 
-                                //this.getLibraryUserLinkedList().set(this.getLibraryUserLinkedList().indexOf(libraryUser),libraryUser);
-                                //this.getLibraryItemLinkedList().set(this.getLibraryItemLinkedList().indexOf(libraryItem),libraryItem);
-
-
-                                System.out.println("Created a new loan for " + libraryUser.getLibraryUserName() + " with the item " + libraryItem.getTitle());
-                            } else {
-                                System.out.println("The item: " + libraryItem.getTitle() + " is currently unavailable.");
-                            }
-                        }
+                        System.out.println("Created a new loan for " + libraryUser.getLibraryUserName() + " with the item " + libraryItem.getTitle());
+                    } else {
+                        System.out.println("The item: " + libraryItem.getTitle() + " is currently unavailable.");
                     }
-
+                }
+                else {
+                    System.out.println("Library item does not exist");
+                }
             }
             else{
                 System.out.println("Library user does not exist");
@@ -411,44 +425,40 @@ public class Catalogue {
     public void returnItemById(int libraryItemId) {
 
         try {
-            //Check to see if the item id exists
-            for (LibraryItem libraryItem : this.getLibraryItemLinkedList()) {
-                if (libraryItem.getLibraryItemId() == libraryItemId) {
+            LibraryItem libraryItem = findLibraryItemById(libraryItemId);
+            if (libraryItem!= null) {
 
-                    //Check to see if Loan exists
-                    for (Loan loan : this.getLoanLinkedList()) {
-                        if (loan.getLibraryItemId() == libraryItemId) {
-                            if(!libraryItem.getAvailability()){
+                //Check to see if Loan exists
+                for (Loan loan : this.getLoanLinkedList()) {
+                    if (loan.getLibraryItemId() == libraryItemId) {
+                        if(!libraryItem.getAvailability()){
 
-                                for(LibraryUser libraryUser : this.getLibraryUserLinkedList()){
-                                    if(loan.getLibraryUserId() == libraryUser.getLibraryUserId()){
+                            for(LibraryUser libraryUser : this.getLibraryUserLinkedList()){
+                                if(loan.getLibraryUserId() == libraryUser.getLibraryUserId()){
 
-                                        libraryUser.returnBorrowedItem(libraryItem);
+                                    libraryUser.returnBorrowedItem(libraryItem);
 
-                                        libraryItem.setAvailability(true);
+                                    libraryItem.setAvailability(true);
 
-                                        loan.setDateReturned(LocalDate.now());
-
-
-                                        this.getLibraryItemLinkedList().set(this.getLibraryItemLinkedList().indexOf(libraryItem),libraryItem);
-                                        this.getLibraryUserLinkedList().set(this.getLibraryUserLinkedList().indexOf(libraryUser),libraryUser);
-
-                                        System.out.println("Returned item: " + libraryItem.getTitle() + " for " + libraryUser.getLibraryUserName());
+                                    loan.setDateReturned(LocalDate.now());
 
 
-                                    }
+                                    this.getLibraryItemLinkedList().set(this.getLibraryItemLinkedList().indexOf(libraryItem),libraryItem);
+                                    this.getLibraryUserLinkedList().set(this.getLibraryUserLinkedList().indexOf(libraryUser),libraryUser);
+
+                                    System.out.println("Returned item: " + libraryItem.getTitle() + " for " + libraryUser.getLibraryUserName());
+
 
                                 }
-
-
-                            }else {
-                                System.out.println("The item: " + libraryItem.getLibraryItemId() + ", " + libraryItem.getTitle() + ", is not out on loan.");
-
-
-                        }
+                            }
+                        }else {
+                            System.out.println("The item: " + libraryItem.getLibraryItemId() + ", " + libraryItem.getTitle() + ", is not out on loan.");
                         }
                     }
                 }
+            }
+            else{
+                System.out.println("Library item does not exist");
             }
         } catch (LoanException e) {
             throw new RuntimeException(e);
@@ -574,7 +584,7 @@ public class Catalogue {
                 author.displaySummaryDetails();
             }
         }else {
-        System.out.println("No authors have been added to the library.");
+            System.out.println("No authors have been added to the library.");
         }
     }
 
@@ -629,7 +639,7 @@ public class Catalogue {
         }
     }
     // Method to list all available DVDs in the library catalogue
-        public void listAvailableDVDs() {
+    public void listAvailableDVDs() {
         if (!this.getLibraryItemLinkedList().isEmpty()) {
             for (LibraryItem libraryItem : this.getLibraryItemLinkedList()) {
                 if (libraryItem.getAvailability() && libraryItem instanceof DVD) {
@@ -972,6 +982,20 @@ public class Catalogue {
             System.out.println("Loan.csv file does not exist. Cannot load.");
         }
 
+
+        for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
+            libraryItem.displayAllDetails();
+        }
+
+
+        if(!this.getLibraryItemLinkedList().isEmpty()){
+            libraryItemSort(this.getLibraryItemLinkedList());
+        }
+
+        for(LibraryItem libraryItem : this.getLibraryItemLinkedList()){
+            libraryItem.displayAllDetails();
+        }
+
     }
 
     // Method to search for a library item by its ID
@@ -1023,6 +1047,7 @@ public class Catalogue {
                         dissertationCSVPrinter.printRecord(libraryItem.convertToCommaDelimitedArray());
                     }
                 }
+
 
             } catch (IOException e) {
                 // Handle IOException if there's an error writing the files
@@ -1120,6 +1145,19 @@ public class Catalogue {
     }
 
 
+    //Insertion sort using the compareTo method to sort the libraryItemsLinkedList by ID
+    private void libraryItemSort(LinkedList<LibraryItem> libraryItemsLinkedList){
+        int n = libraryItemsLinkedList.size();
 
+        for (int i = 1; i < n; ++i) {
+            LibraryItem key = libraryItemsLinkedList.remove(i);
+            int j = i - 1;
 
+            while (j >= 0 && libraryItemsLinkedList.get(j).compareTo(key) > 0) {
+                j = j - 1;
+            }
+
+            libraryItemsLinkedList.add(j + 1, key);
+        }
+    }
 }

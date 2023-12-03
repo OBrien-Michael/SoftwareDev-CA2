@@ -78,5 +78,8 @@ public abstract class LibraryItem implements Printable, Saveable,Comparable<Libr
         return "Library Item ID = "+libraryItemId+", Title=" + title + ", authorId=" + authorId + ", availability=" + availability+" ";
     }
 
-
+    @Override
+    public int compareTo(LibraryItem o) {
+        return Integer.compare(this.getLibraryItemId(), o.getLibraryItemId());
+    }
 }
