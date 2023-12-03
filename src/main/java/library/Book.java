@@ -17,7 +17,7 @@ public class Book extends LiteratureItem {
 
     @Override
     public int compareTo(LibraryItem libraryItem) {
-        return this.getTitle().compareTo(libraryItem.getTitle());
+        return Integer.compare(this.getLibraryItemId(), libraryItem.getLibraryItemId());
     }
 
     @Override

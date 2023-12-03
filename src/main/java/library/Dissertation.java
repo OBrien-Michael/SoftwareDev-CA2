@@ -25,7 +25,7 @@ public class Dissertation extends ResearchItem {
     // Compares this Dissertation to another LibraryItem by title
     @Override
     public int compareTo(LibraryItem libraryItem) {
-        return this.getTitle().compareTo(libraryItem.getTitle());
+        return Integer.compare(this.getLibraryItemId(), libraryItem.getLibraryItemId());
     }
 
     // Prints all details of the Dissertation

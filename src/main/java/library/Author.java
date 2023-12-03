@@ -85,7 +85,7 @@ public class Author implements Printable, Saveable,Comparable<Author>{
     // Overridden compareTo method for comparing authors by name
     @Override
     public int compareTo(Author author) {
-        return this.getAuthorName().compareTo(author.getAuthorName());
+        return Integer.compare(this.getAuthorId(), author.getAuthorId());
     }
 
     // Overridden displayAllDetails method from Printable interface

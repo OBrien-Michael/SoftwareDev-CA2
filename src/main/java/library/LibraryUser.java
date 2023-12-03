@@ -102,7 +102,7 @@ public class LibraryUser implements Printable, Saveable,Comparable<LibraryUser>{
     //Comparing library users names
     @Override
     public int compareTo(LibraryUser libraryUser) {
-        return this.getLibraryUserName().compareTo(libraryUser.getLibraryUserName());
+        return Integer.compare(this.getLibraryUserId(), libraryUser.getLibraryUserId());
     }
 
     // Overridden displayAllDetails method to display all details of the LibraryUser

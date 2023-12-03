@@ -23,7 +23,7 @@ public class AudioBook extends LiteratureItem {
     //Comparing by audiobook name
     @Override
     public int compareTo(LibraryItem libraryItem) {
-        return this.getTitle().compareTo(libraryItem.getTitle());
+        return Integer.compare(this.getLibraryItemId(), libraryItem.getLibraryItemId());
     }
 
     @Override

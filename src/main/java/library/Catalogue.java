@@ -5,6 +5,8 @@ import library.exceptions.AuthorException;
 import library.exceptions.LibraryItemException;
 import library.exceptions.LibraryUserException;
 import library.exceptions.LoanException;
+import library.lambdas.AuthorFinder;
+import library.lambdas.LibraryItemFinder;
 import library.lambdas.LibraryUserFinder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -151,19 +154,23 @@ public class Catalogue {
     //If there are library items, grab the last item ID and add 1 to it and add it to the catalogue.
     public void addNewBook(String bookTitle, int bookAuthorId, String bookIsbn) {
         try {
-            if (this.getLibraryItemLinkedList().isEmpty()) {
+            if (findAuthorById(bookAuthorId) != null) {
+                if (this.getLibraryItemLinkedList().isEmpty()) {
 
-                this.getLibraryItemLinkedList().add(new Book(1, bookTitle, bookAuthorId, true, bookIsbn));
-                System.out.println("New Book added to the catalogue: Book Id: 1 Book Title: " + bookTitle);
-
-
-            } else {
-                int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
-
-                this.getLibraryItemLinkedList().add(new Book(nextLibraryItemId + 1, bookTitle, bookAuthorId, true, bookIsbn));
-                System.out.println("New Book added to the catalogue: Book Id: " + (nextLibraryItemId + 1) + " Book Title: " + bookTitle);
+                    this.getLibraryItemLinkedList().add(new Book(1, bookTitle, bookAuthorId, true, bookIsbn));
+                    System.out.println("New Book added to the catalogue: Book Id: 1 Book Title: " + bookTitle);
 
 
+                } else {
+                    int nextLibraryItemId = this.getLibraryItemLinkedList().getLast().getLibraryItemId();
+
+                    this.getLibraryItemLinkedList().add(new Book(nextLibraryItemId + 1, bookTitle, bookAuthorId, true, bookIsbn));
+                    System.out.println("New Book added to the catalogue: Book Id: " + (nextLibraryItemId + 1) + " Book Title: " + bookTitle);
+
+
+                }
+            }else{
+                System.out.println("Author does not exist in the system.");
             }
         } catch (LibraryItemException libraryItemException) {
             System.out.println(libraryItemException.getLibraryItemExceptionMessage());
@@ -174,7 +181,7 @@ public class Catalogue {
     //If there are library items, grab the last item ID and add 1 to it and add it to the catalogue.
     public void addNewAudioBook(String audioBookTitle, int audioBookAuthorId, String audioBookIsbn) {
         try {
-
+            if (findAuthorById(audioBookAuthorId) != null) {
             if (this.getLibraryItemLinkedList().isEmpty()) {
 
                 this.getLibraryItemLinkedList().add(new AudioBook(1, audioBookTitle, audioBookAuthorId, true, audioBookIsbn));
@@ -186,6 +193,9 @@ public class Catalogue {
                 this.getLibraryItemLinkedList().add(new AudioBook(nextLibraryItemId + 1, audioBookTitle, audioBookAuthorId, true, audioBookIsbn));
                 System.out.println("New AudioBook added to the catalogue: AudioBook Id: " + (nextLibraryItemId + 1) + " AudioBook Title: " + audioBookTitle);
 
+            }
+            }else{
+                System.out.println("Author does not exist in the system.");
             }
         } catch (LibraryItemException libraryItemException) {
             System.out.println(libraryItemException.getLibraryItemExceptionMessage());
@@ -357,8 +367,8 @@ public class Catalogue {
 
             LibraryUser libraryUser = findLibraryUserById(libraryItemId);
             //Check to see if User exists
-            if(findLibraryUserById(libraryItemId) != null){
-                if (libraryUser.getLibraryUserId() == libraryUserId) {
+            if(libraryUser != null){
+
 
                     //Check to see if Library Item exists
                     for (LibraryItem libraryItem : libraryItemLinkedList) {
@@ -387,7 +397,7 @@ public class Catalogue {
                             }
                         }
                     }
-                }
+
             }
             else{
                 System.out.println("Library user does not exist");
@@ -858,7 +868,7 @@ public class Catalogue {
                     String thesesTopic = thesesRecord.get(3);
                     String thesesAbstract = thesesRecord.get(4);
                     LocalDate thesesDatePublished = LocalDate.parse(thesesRecord.get(5));
-                    boolean thesesAvailability = Boolean.parseBoolean(thesesRecord.get(4));
+                    boolean thesesAvailability = Boolean.parseBoolean(thesesRecord.get(6));
                     // Create a new Theses object and add it to the library item list
                     Theses loadTheses = new Theses(libraryItemId, thesesTitle, authorId, thesesAvailability, thesesTopic, thesesAbstract, thesesDatePublished);
                     this.libraryItemLinkedList.add(loadTheses);
@@ -1079,6 +1089,35 @@ public class Catalogue {
     }
 
 
+    //Find a library item by the id, return null if no item is found.
+    private LibraryItemFinder libraryItemFinder = (libraryItemLinkedList, libraryItemId) -> {
+        for (LibraryItem libraryItem : libraryItemLinkedList) {
+            if (libraryItem.getLibraryItemId() == libraryItemId) {
+                return libraryItem;
+            }
+        }
+        return null; // Return null if no match is found
+    };
+
+    // Method to use the lambda expression
+    public LibraryItem findLibraryItemById(int libraryItemId) {
+        return libraryItemFinder.findLibraryItemById(this.getLibraryItemLinkedList(), libraryItemId);
+    }
+
+    //Find a author by the id, return null if no author is found.
+    private AuthorFinder authorFinder = (authorLinkedList, authorId) -> {
+        for (Author author : authorLinkedList) {
+            if (author.getAuthorId() == authorId) {
+                return author;
+            }
+        }
+        return null; // Return null if no match is found
+    };
+
+    // Method to use the lambda expression
+    public Author findAuthorById(int authorId) {
+        return authorFinder.findAuthorById(this.getAuthorLinkedList(), authorId);
+    }
 
 
 

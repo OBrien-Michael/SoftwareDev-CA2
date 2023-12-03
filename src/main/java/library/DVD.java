@@ -25,7 +25,7 @@ public class DVD extends MediaItem {
     // Overridden compareTo method for comparing DVDs by title
     @Override
     public int compareTo(LibraryItem libraryItem) {
-        return this.getTitle().compareTo(libraryItem.getTitle());
+        return Integer.compare(this.getLibraryItemId(), libraryItem.getLibraryItemId());
     }
 
     // Overridden displayAllDetails method to display all details of the DVD

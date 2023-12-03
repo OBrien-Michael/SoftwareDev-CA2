@@ -24,7 +24,7 @@ public class CD extends MediaItem {
     // Overridden compareTo method that compares CDs based on their titles
     @Override
     public int compareTo(LibraryItem libraryItem) {
-        return this.getTitle().compareTo(libraryItem.getTitle());
+        return Integer.compare(this.getLibraryItemId(), libraryItem.getLibraryItemId());
     }
 
     // Overridden displayAllDetails method that prints all details of the CD

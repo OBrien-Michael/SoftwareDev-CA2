@@ -282,6 +282,7 @@ public class LibraryCatalogueApp {
             System.out.println("10. Save and Load functions");
             System.out.println("11. Generate Borrowed Items Report");
             System.out.println("12. Generate Overdue Items Report");
+            System.out.println("12. Generate All Loans Report");
             System.out.println("13. Return to main menu");
 
             try {
@@ -324,6 +325,9 @@ public class LibraryCatalogueApp {
                         generateOverdueItemsReportMenu();      //Generates list of overdue Items
                         break;
                     case 13:
+                        generateAllLoansReportMenu();      //Generates list of all loans
+                        break;
+                    case 14:
                         return;                                //Returns to Menu
                     default:
                         System.out.println("Invalid choice. Please try again.");
@@ -637,5 +641,9 @@ public class LibraryCatalogueApp {
 
         libraryCatalogue.generateOverdueItemsReport();
 
+    }
+
+    private static void generateAllLoansReportMenu(){
+        libraryCatalogue.generateAllLoansReport();
     }
 }
