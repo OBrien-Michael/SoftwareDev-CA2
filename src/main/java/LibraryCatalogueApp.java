@@ -14,6 +14,7 @@ public class LibraryCatalogueApp {
     private static final Scanner userInput = new Scanner(System.in);
     private static final Catalogue libraryCatalogue = new Catalogue();
 
+    // Date format for user input
     static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static void main(String[] args){
@@ -24,11 +25,11 @@ public class LibraryCatalogueApp {
 
     //Main menu for the application
     private static void appMainMenu(){
-
+        // Attempt to load library data from CSV files
         System.out.println("Attempting to load library data from CSV files...");
         libraryCatalogue.loadCatalogue();
 
-
+        // Main menu in the loop
         while (true) {
             System.out.println("\n--------------------------");
             System.out.println("Welcome to the Library");
@@ -41,27 +42,30 @@ public class LibraryCatalogueApp {
             System.out.println("4. Exit\n");
             System.out.println("PLease enter your choose  :");
 
+            // Get user's choice from input .
             try {
                 int choice = Integer.parseInt(userInput.nextLine());
                 switch (choice) {
                     case 1:
-                        appLibraryUserMenu();
+                        appLibraryUserMenu();   // Go to library user menu
                         break;
                     case 2:
-                        appLibrarianMenu();
+                        appLibrarianMenu();     // Go to librarian menu
                         break;
                     case 3:
-                        libraryCatalogue.saveCatalogue();
+                        libraryCatalogue.saveCatalogue();  // Save the library catalogue and exit
                         System.out.println("Exiting Application.");
                         System.exit(0);
                         break;
-                    case 4:
+                    case 4:                             // Exit the application
                         System.out.println("Exiting Application.");
                         System.exit(0);
                         break;
                     default:
                         System.out.println("Invalid choice. Please try again.");
                         break;
+
+                    //Exception function to catch string from input console.
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid entry. Please enter a valid number" + ".");
@@ -88,28 +92,29 @@ public class LibraryCatalogueApp {
                 int choice = Integer.parseInt(userInput.nextLine());
                 switch (choice) {
                     case 1:
-                        createNewLibraryUserMenu();
+                        createNewLibraryUserMenu();     // Create a new library user
                         break;
                     case 2:
-                        displayLibraryItemsMenu();
+                        displayLibraryItemsMenu();      // Display library items
                         break;
                     case 3:
-                        searchForLibraryItemMenu();
+                        searchForLibraryItemMenu();     // Search for a library item
                         break;
                     case 4:
-                        loanItemMenu();
+                        loanItemMenu();                 // Loan a library item
                         break;
                     case 5:
-                        returnItemMenu();
+                        returnItemMenu();               // Return a library item
                         break;
                     case 6:
-                        checkLibraryUserMenu();
+                        checkLibraryUserMenu();         // Check library user details and overdue items
                         break;
                     case 7:
                         return; // This will exit the current menu and return to the previous menu
                     default:
                         System.out.println("Invalid choice. Please try again.");
                 }
+                //Exception function to catch string from input console.
             } catch (NumberFormatException e) {
                 System.out.println("Invalid entry. Please enter a valid number.");
             }
@@ -129,7 +134,7 @@ public class LibraryCatalogueApp {
     }
 
     private static void displayLibraryItemsMenu() {
-
+        //menu for the user when is displaying items.
         while(true){
             System.out.println("\nDisplay Items:");
             System.out.println("----------------");
@@ -147,43 +152,43 @@ public class LibraryCatalogueApp {
 
 
             try{
-            int choice = Integer.parseInt(userInput.nextLine());
-            switch (choice) {
-                case 1:
-                    libraryCatalogue.listAllLibraryItemsAllDetails();
-                    break;
-                case 2:
-                    libraryCatalogue.listAllLibraryItemsSummaryDetails();
-                    break;
-                case 3:
-                    libraryCatalogue.listAvailableItems();
-                    break;
-                case 4:
-                    libraryCatalogue.listAvailableBooks();
-                    break;
-                case 5:
-                    libraryCatalogue.listAvailableAudioBooks();
-                    break;
-                case 6:
-                    libraryCatalogue.listAvailableCDs();
-                    break;
-                case 7:
-                    libraryCatalogue.listAvailableDVDs();
-                    break;
-                case 8:
-                    libraryCatalogue.listAvailableTheses();
-                    break;
-                case 9:
-                    libraryCatalogue.listAvailableDissertations();
-                    break;
-                case 10:
-                    libraryCatalogue.listUnavailableItems();
-                    break;
-                case 11:
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
+                int choice = Integer.parseInt(userInput.nextLine());
+                switch (choice) {
+                    case 1:
+                        libraryCatalogue.listAllLibraryItemsAllDetails();    // Display all library items with full details
+                        break;
+                    case 2:
+                        libraryCatalogue.listAllLibraryItemsSummaryDetails();   // Display all library items with summary details
+                        break;
+                    case 3:
+                        libraryCatalogue.listAvailableItems();          // Display all available library items
+                        break;
+                    case 4:
+                        libraryCatalogue.listAvailableBooks();          // Display all available books
+                        break;
+                    case 5:
+                        libraryCatalogue.listAvailableAudioBooks();     // Display all available audiobooks
+                        break;
+                    case 6:
+                        libraryCatalogue.listAvailableCDs();            // Display all available CDs
+                        break;
+                    case 7:
+                        libraryCatalogue.listAvailableDVDs();           // Display all available DVDs
+                        break;
+                    case 8:
+                        libraryCatalogue.listAvailableTheses();         // Display all available theses
+                        break;
+                    case 9:
+                        libraryCatalogue.listAvailableDissertations();  // Display all available dissertations
+                        break;
+                    case 10:
+                        libraryCatalogue.listUnavailableItems();        // Display all unavailable library items
+                        break;
+                    case 11:
+                        return;                                         // Return to main menu
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid entry. Please enter a valid number" + ".");
             }
@@ -195,15 +200,15 @@ public class LibraryCatalogueApp {
 
         System.out.println("Please enter your Library User ID:");
         try {
-            int libraryUserId = Integer.parseInt(userInput.nextLine());
+            int libraryUserId = Integer.parseInt(userInput.nextLine());         // Get library user ID
 
             System.out.println("Please enter the Item ID you would like to borrow:");
-            int libraryItemId = Integer.parseInt(userInput.nextLine());
+            int libraryItemId = Integer.parseInt(userInput.nextLine());         // Get library item ID
 
-            libraryCatalogue.createNewLoanById(libraryUserId,libraryItemId);
+            libraryCatalogue.createNewLoanById(libraryUserId,libraryItemId);    // Create a new loan by library user ID and item ID
         } catch (NumberFormatException e) {
-        System.out.println("Invalid entry. Please enter a valid number" + ".");
-    }
+            System.out.println("Invalid entry. Please enter a valid number" + ".");
+        }
 
     }
 
@@ -214,15 +219,15 @@ public class LibraryCatalogueApp {
 
         System.out.println("Please enter the Item ID you would like to return:");
         try{
-            int libraryItemId = Integer.parseInt(userInput.nextLine());
+            int libraryItemId = Integer.parseInt(userInput.nextLine());         // Get library item ID
 
-            libraryCatalogue.returnItemById(libraryItemId);
+            libraryCatalogue.returnItemById(libraryItemId);                     // Return item by library item ID
         } catch (NumberFormatException e) {
-        System.out.println("Invalid entry. Please enter a valid number" + ".");
-    }
+            System.out.println("Invalid entry. Please enter a valid number" + ".");
+        }
 
     }
-
+    // return Item sub Menu
     private static void searchForLibraryItemMenu() {
         System.out.println("\nSearch for a Library Item:");
 
@@ -237,9 +242,9 @@ public class LibraryCatalogueApp {
             } else {
                 System.out.println("No item found with ID: " + libraryItemId);
             }
-        } catch (NumberFormatException e) {
-        System.out.println("Invalid entry. Please enter a valid number" + ".");
-    }
+        } catch (NumberFormatException e) {                     // Exception to catch invalid entry
+            System.out.println("Invalid entry. Please enter a valid number" + ".");
+        }
     }
 
 
