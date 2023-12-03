@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoanTest {
 
     @Test
-    void getMember() {
+    void getLibraryUser() {
     }
 
     @Test
-    void setMember() {
+    void setLibraryUser() {
     }
 
     @Test
@@ -39,7 +39,7 @@ class LoanTest {
     }
 
     @Test
-    void returnItem() {
+    void testToString() {
     }
 
     @Test
@@ -55,6 +55,6 @@ class LoanTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

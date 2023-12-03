@@ -1,10 +1,15 @@
 package library;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ThesesTest {
+
+    @BeforeEach
+    void setUp() {
+    }
 
     @Test
     void getTopic() {
@@ -31,6 +36,18 @@ class ThesesTest {
     }
 
     @Test
+    void testToString() {
+    }
+
+    @Test
+    void getLibraryItemId() {
+    }
+
+    @Test
+    void setLibraryItemId() {
+    }
+
+    @Test
     void getTitle() {
     }
 
@@ -39,24 +56,21 @@ class ThesesTest {
     }
 
     @Test
-    void getAuthor() {
+    void getAuthorId() {
     }
 
     @Test
-    void setAuthor() {
+    void setAuthorId() {
     }
 
     @Test
-    void isAvailability() {
+    void getAvailability() {
     }
 
     @Test
     void setAvailability() {
     }
 
-    @Test
-    void testToString() {
-    }
 
     @Test
     void compareTo() {
@@ -71,6 +85,6 @@ class ThesesTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

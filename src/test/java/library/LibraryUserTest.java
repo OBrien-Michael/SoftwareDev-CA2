@@ -7,19 +7,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class LibraryUserTest {
 
     @Test
-    void getMemberId() {
+    void getLibraryUserId() {
     }
 
     @Test
-    void setMemberId() {
+    void setLibraryUserId() {
     }
 
     @Test
-    void getMemberName() {
+    void getLibraryUserName() {
     }
 
     @Test
-    void setMemberName() {
+    void setLibraryUserName() {
     }
 
     @Test
@@ -28,6 +28,14 @@ class LibraryUserTest {
 
     @Test
     void setBorrowedAssets() {
+    }
+
+    @Test
+    void addNewBorrowedItem() {
+    }
+
+    @Test
+    void returnBorrowedItem() {
     }
 
     @Test
@@ -47,6 +55,6 @@ class LibraryUserTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

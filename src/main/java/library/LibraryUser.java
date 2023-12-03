@@ -1,9 +1,13 @@
 package library;
 
+import library.abstracts.LibraryItem;
+import library.interfaces.Printable;
+import library.interfaces.Saveable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class LibraryUser implements Printable,Saveable,Comparable<LibraryUser>{
+public class LibraryUser implements Printable, Saveable,Comparable<LibraryUser>{
 
     private int libraryUserId;
     private String libraryUserName;

@@ -1,10 +1,14 @@
 package library;
 
 
+import library.abstracts.LibraryItem;
+import library.interfaces.Printable;
+import library.interfaces.Saveable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Loan implements Printable,Saveable,Comparable<Loan>{
+public class Loan implements Printable, Saveable,Comparable<Loan>{
 
     private LibraryUser libraryUser;
     private LibraryItem libraryItem;

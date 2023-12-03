@@ -19,6 +19,14 @@ class BookTest {
     }
 
     @Test
+    void getLibraryItemId() {
+    }
+
+    @Test
+    void setLibraryItemId() {
+    }
+
+    @Test
     void getTitle() {
     }
 
@@ -27,15 +35,15 @@ class BookTest {
     }
 
     @Test
-    void getAuthor() {
+    void getAuthorId() {
     }
 
     @Test
-    void setAuthor() {
+    void setAuthorId() {
     }
 
     @Test
-    void isAvailability() {
+    void getAvailability() {
     }
 
     @Test
@@ -59,6 +67,6 @@ class BookTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

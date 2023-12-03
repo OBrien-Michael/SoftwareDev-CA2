@@ -1,6 +1,7 @@
 package library;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AudioBookTest {
@@ -18,6 +19,14 @@ class AudioBookTest {
     }
 
     @Test
+    void getLibraryItemId() {
+    }
+
+    @Test
+    void setLibraryItemId() {
+    }
+
+    @Test
     void getTitle() {
     }
 
@@ -26,24 +35,21 @@ class AudioBookTest {
     }
 
     @Test
-    void getAuthor() {
+    void getAuthorId() {
     }
 
     @Test
-    void setAuthor() {
+    void setAuthorId() {
     }
 
     @Test
-    void isAvailability() {
+    void getAvailability() {
     }
 
     @Test
     void setAvailability() {
     }
 
-    @Test
-    void testToString1() {
-    }
 
     @Test
     void compareTo() {
@@ -58,6 +64,6 @@ class AudioBookTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

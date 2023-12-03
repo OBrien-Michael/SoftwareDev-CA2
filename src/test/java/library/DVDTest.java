@@ -19,6 +19,14 @@ class DVDTest {
     }
 
     @Test
+    void getLibraryItemId() {
+    }
+
+    @Test
+    void setLibraryItemId() {
+    }
+
+    @Test
     void getTitle() {
     }
 
@@ -27,15 +35,15 @@ class DVDTest {
     }
 
     @Test
-    void getAuthor() {
+    void getAuthorId() {
     }
 
     @Test
-    void setAuthor() {
+    void setAuthorId() {
     }
 
     @Test
-    void isAvailability() {
+    void getAvailability() {
     }
 
     @Test
@@ -55,6 +63,6 @@ class DVDTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

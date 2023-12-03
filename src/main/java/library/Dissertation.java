@@ -1,9 +1,12 @@
 package library;
 
+import library.abstracts.LibraryItem;
+import library.abstracts.ResearchItem;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Dissertation extends ResearchItem{
+public class Dissertation extends ResearchItem {
 
     public Dissertation() {
     }

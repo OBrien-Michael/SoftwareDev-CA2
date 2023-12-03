@@ -1,27 +1,21 @@
 import library.Catalogue;
-import library.LibraryUser;
-import java.io.BufferedReader;
-import java.io.IOException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
-import java.io.FileReader;
+
+import library.abstracts.LibraryItem;
 
 public class LibraryCatalogueApp {
 
     //Static Scanner to take in user input but be accessed anywhere in the Main class
-    private static Scanner userInput = new Scanner(System.in);
-    private static Catalogue libraryCatalogue = new Catalogue();
+    private static final Scanner userInput = new Scanner(System.in);
+    private static final Catalogue libraryCatalogue = new Catalogue();
 
     static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    static LocalDate testDate = LocalDate.parse("10/11/1999", dateFormatter);
+
     public static void main(String[] args){
-
-        //libraryCatalogue.loadCatalogue();
-
-        //Uncomment to generate some test data
-        //testData();
 
         appMainMenu();
     }
@@ -30,14 +24,8 @@ public class LibraryCatalogueApp {
     //Main menu for the application
     private static void appMainMenu(){
 
-        //System.out.println("Would you like to load data?");
-        //System.out.println("1. Yes");
-        //System.out.println("Any other number for no");
-        //int choice = Integer.parseInt(userInput.nextLine());
-        //if(choice == 1){
-        System.out.println("Loading from CSV files...");
+        System.out.println("Attempting to load library data from CSV files...");
         libraryCatalogue.loadCatalogue();
-        //}
 
 
         while (true) {
@@ -140,57 +128,60 @@ public class LibraryCatalogueApp {
     }
 
     private static void displayLibraryItemsMenu() {
-        System.out.println("\nDisplay Items:");
-        System.out.println("----------------");
-        System.out.println("1. List all items");
-        System.out.println("2. List all items summary");
-        System.out.println("3. List all available items");
-        System.out.println("4. List all available books");
-        System.out.println("5. List all available audiobooks");
-        System.out.println("6. List all available cds");
-        System.out.println("7. List all available dvds");
-        System.out.println("8. List all available theses");
-        System.out.println("9. List all available dissertations");
-        System.out.println("10. List all unavailable items");
-        System.out.println("11. Return to main menu.");
+
+        while(true){
+            System.out.println("\nDisplay Items:");
+            System.out.println("----------------");
+            System.out.println("1. List all items");
+            System.out.println("2. List all items summary");
+            System.out.println("3. List all available items");
+            System.out.println("4. List all available books");
+            System.out.println("5. List all available audiobooks");
+            System.out.println("6. List all available cds");
+            System.out.println("7. List all available dvds");
+            System.out.println("8. List all available theses");
+            System.out.println("9. List all available dissertations");
+            System.out.println("10. List all unavailable items");
+            System.out.println("11. Return to main menu.");
 
 
-        int choice = Integer.parseInt(userInput.nextLine());
-        switch (choice) {
-            case 1:
-                libraryCatalogue.listAllLibraryItemsAllDetails();
-                break;
-            case 2:
-                libraryCatalogue.listAllLibraryItemsSummaryDetails();
-                break;
-            case 3:
-                libraryCatalogue.listAvailableItems();
-                break;
-            case 4:
-                libraryCatalogue.listAvailableBooks();
-                break;
-            case 5:
-                libraryCatalogue.listAvailableAudioBooks();
-                break;
-            case 6:
-                libraryCatalogue.listAvailableCDs();
-                break;
-            case 7:
-                libraryCatalogue.listAvailableDVDs();
-                break;
-            case 8:
-                libraryCatalogue.listAvailableTheses();
-                break;
-            case 9:
-                libraryCatalogue.listAvailableDissertations();
-                break;
-            case 10:
-                libraryCatalogue.listUnavailableItems();
-                break;
-            case 11:
-                return;
-            default:
-                System.out.println("Invalid choice. Please try again.");
+            int choice = Integer.parseInt(userInput.nextLine());
+            switch (choice) {
+                case 1:
+                    libraryCatalogue.listAllLibraryItemsAllDetails();
+                    break;
+                case 2:
+                    libraryCatalogue.listAllLibraryItemsSummaryDetails();
+                    break;
+                case 3:
+                    libraryCatalogue.listAvailableItems();
+                    break;
+                case 4:
+                    libraryCatalogue.listAvailableBooks();
+                    break;
+                case 5:
+                    libraryCatalogue.listAvailableAudioBooks();
+                    break;
+                case 6:
+                    libraryCatalogue.listAvailableCDs();
+                    break;
+                case 7:
+                    libraryCatalogue.listAvailableDVDs();
+                    break;
+                case 8:
+                    libraryCatalogue.listAvailableTheses();
+                    break;
+                case 9:
+                    libraryCatalogue.listAvailableDissertations();
+                    break;
+                case 10:
+                    libraryCatalogue.listUnavailableItems();
+                    break;
+                case 11:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
     }
     private static void loanItemMenu() {
@@ -219,10 +210,19 @@ public class LibraryCatalogueApp {
     }
 
     private static void searchForLibraryItemMenu() {
-        //TODO
-        System.out.println("Todo");
-    }
+        System.out.println("\nSearch for a Library Item:");
 
+        System.out.println("Please enter the Item ID you would like to search for:");
+        int libraryItemId = Integer.parseInt(userInput.nextLine());
+
+        LibraryItem libraryItem = libraryCatalogue.searchByLibraryItemId(libraryItemId);
+        if (libraryItem != null) {
+            // Call the display all details method to print to screen
+            libraryItem.displayAllDetails();
+        } else {
+            System.out.println("No item found with ID: " + libraryItemId);
+        }
+    }
 
 
 
@@ -335,14 +335,14 @@ public class LibraryCatalogueApp {
 
     private static void addNewLibraryItemMenu() {
 
-            System.out.println("Add new Library Item Menu:");
-            System.out.println("1. Add new Book");
-            System.out.println("2. Add new AudioBook");
-            System.out.println("3. Add new CD");
-            System.out.println("4. Add new DVD");
-            System.out.println("5. Add new Theses");
-            System.out.println("6. Add new Dissertation");
-            System.out.println("7. Return to Librarian Menu");
+        System.out.println("Add new Library Item Menu:");
+        System.out.println("1. Add new Book");
+        System.out.println("2. Add new AudioBook");
+        System.out.println("3. Add new CD");
+        System.out.println("4. Add new DVD");
+        System.out.println("5. Add new Theses");
+        System.out.println("6. Add new Dissertation");
+        System.out.println("7. Return to Librarian Menu");
 
 
         int choice = Integer.parseInt(userInput.nextLine());
@@ -373,22 +373,30 @@ public class LibraryCatalogueApp {
 
 
     }
-
+    //section for the new book with restrictions of 13 dig number .
     private static void addNewBookMenu() {
-
         System.out.println("Please enter the Title of the Book:");
         String bookTitle = userInput.nextLine();
 
         System.out.println("Please enter the Authors Id:");
         int bookAuthorId = Integer.parseInt(userInput.nextLine());
 
-        System.out.println("Please enter the ISBN of the Book:");
-        String bookIsbn = userInput.nextLine();
+        String bookIsbn;
+        while (true) {
+            System.out.println("Please enter the ISBN of the Book (13 digits):");
+            bookIsbn = userInput.nextLine();
+            if (isValidIsbn(bookIsbn)) {
+                break;
+            }
+            System.out.println("Invalid ISBN. The ISBN must be a 13-digit integer.");
+        }
 
-
-        libraryCatalogue.addNewBook(bookTitle,bookAuthorId,bookIsbn);
+        libraryCatalogue.addNewBook(bookTitle, bookAuthorId, bookIsbn);
     }
 
+    private static boolean isValidIsbn(String isbn) {
+        return isbn.matches("\\d{13}");
+    }
     private static void addNewAudioBookMenu() {
 
         System.out.println("Please enter the Title of the AudioBook:");
@@ -485,16 +493,9 @@ public class LibraryCatalogueApp {
     }
 
     private static void displayAuthorDataMenu() {
-        System.out.println("\nDisplaying ID of the Authors from our Library:");
-        String line;
-        try (BufferedReader br = new BufferedReader(new FileReader("Author.csv"))) {
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred while trying to read the file.");
-            e.printStackTrace();
-        }
+
+        System.out.println("\nDisplaying all details of the Authors from our Library:");
+        libraryCatalogue.listAllAuthorsAllDetails();
     }
 
     private static void saveAndLoadFunctionMenu() {
@@ -531,119 +532,5 @@ public class LibraryCatalogueApp {
 
     }
 
-
-
-
-
-
-    private static void testData(){
-
-        libraryCatalogue.listAllLibraryItemsAllDetails();
-
-        libraryCatalogue.listAllLibraryItemsSummaryDetails();
-
-        libraryCatalogue.listAllLibraryUsersAllDetails();
-
-        libraryCatalogue.listAllLibraryUsersSummaryDetails();
-
-
-        libraryCatalogue.removeAuthorById(1);
-
-        libraryCatalogue.addNewAuthor("Zayd Henderson");
-        libraryCatalogue.addNewAuthor("Vinnie Dalton");
-        libraryCatalogue.addNewAuthor("Rebekah Mcgee");
-        libraryCatalogue.addNewAuthor("Jag Sullivan");
-        libraryCatalogue.addNewAuthor("Kris Roman");
-        libraryCatalogue.addNewAuthor("Ridley Scot");
-
-        libraryCatalogue.removeAuthorById(1);
-        libraryCatalogue.removeAuthorById(4);
-
-        libraryCatalogue.addNewBook("Java",2,"12312312");
-        libraryCatalogue.addNewBook("C#",2,"1231231343242");
-        libraryCatalogue.addNewBook("F#",2,"12312352352312");
-
-        libraryCatalogue.addNewAudioBook("Agile",2,"1212121212121");
-        libraryCatalogue.addNewAudioBook("Scrum",2,"1212121212121");
-        libraryCatalogue.addNewAudioBook("Kanban",2,"12312352352312");
-
-        libraryCatalogue.addNewCD("Abba",2,20);
-        libraryCatalogue.addNewCD("Fijiwiji",2,40);
-        libraryCatalogue.addNewCD("Metallica",2,60);
-
-        libraryCatalogue.addNewDVD("Marvel",4,180);
-        libraryCatalogue.addNewDVD("DC",5,160);
-        libraryCatalogue.addNewDVD("Alien",6,150);
-
-        libraryCatalogue.addNewTheses("Ants",5,"AI","Abstract1",testDate);
-        libraryCatalogue.addNewTheses("RSA",5,"Crypto","abstract2",testDate);
-        libraryCatalogue.addNewTheses("DSA",5,"Crypto","abstract3",testDate);
-
-        libraryCatalogue.addNewDissertation("Java",5,"TOPICAL","Abstract1",testDate);
-        libraryCatalogue.addNewDissertation("C#",5,"TOPICAL2","abstract2",testDate);
-        libraryCatalogue.addNewDissertation("F#",5,"TOPICAL3","abstract3",testDate);
-
-        libraryCatalogue.removeLibraryItemById(1);
-        libraryCatalogue.removeLibraryItemById(4);
-        libraryCatalogue.removeLibraryItemById(8);
-        libraryCatalogue.removeLibraryItemById(10);
-        libraryCatalogue.removeLibraryItemById(22);
-        libraryCatalogue.removeLibraryItemById(3);
-
-        libraryCatalogue.addNewLibraryUser("Jim");
-        libraryCatalogue.addNewLibraryUser("John");
-
-        libraryCatalogue.createNewLoanById(1,2);
-        libraryCatalogue.createNewLoanById(1,2);
-        libraryCatalogue.createNewLoanById(0,0);
-        libraryCatalogue.createNewLoanById(1,3);
-        libraryCatalogue.createNewLoanById(1,4);
-        libraryCatalogue.createNewLoanById(1,5);
-
-        libraryCatalogue.returnItemById(0);
-        libraryCatalogue.returnItemById(1);
-        libraryCatalogue.returnItemById(2);
-        libraryCatalogue.returnItemById(3);
-        libraryCatalogue.returnItemById(4);
-        libraryCatalogue.returnItemById(5);
-        libraryCatalogue.returnItemById(6);
-        libraryCatalogue.returnItemById(7);
-        libraryCatalogue.returnItemById(8);
-        libraryCatalogue.returnItemById(9);
-        libraryCatalogue.returnItemById(10);
-        libraryCatalogue.returnItemById(11);
-
-        libraryCatalogue.createNewLoanById(1,1);
-        libraryCatalogue.createNewLoanById(1,2);
-        libraryCatalogue.createNewLoanById(1,3);
-        libraryCatalogue.createNewLoanById(1,4);
-        libraryCatalogue.createNewLoanById(1,5);
-
-        libraryCatalogue.createNewLoanById(1,6);
-        libraryCatalogue.createNewLoanById(1,7);
-
-
-
-
-
-        libraryCatalogue.listAllLibraryItemsAllDetails();
-
-        libraryCatalogue.listAllLibraryItemsSummaryDetails();
-
-        libraryCatalogue.listAllLibraryUsersAllDetails();
-
-        libraryCatalogue.listAllLibraryUsersSummaryDetails();
-
-        libraryCatalogue.listAllAuthorsAllDetails();
-
-        libraryCatalogue.listAllAuthorsSummaryDetails();
-
-
-
-        libraryCatalogue.listAvailableItems();
-
-        libraryCatalogue.listUnavailableItems();
-
-    }
 
 }

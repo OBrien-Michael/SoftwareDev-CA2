@@ -1,10 +1,15 @@
 package library;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CDTest {
+
+    @BeforeEach
+    void setUp() {
+    }
 
     @Test
     void getPlaytime() {
@@ -19,6 +24,14 @@ class CDTest {
     }
 
     @Test
+    void getLibraryItemId() {
+    }
+
+    @Test
+    void setLibraryItemId() {
+    }
+
+    @Test
     void getTitle() {
     }
 
@@ -27,27 +40,19 @@ class CDTest {
     }
 
     @Test
-    void getAuthor() {
+    void getAuthorId() {
     }
 
     @Test
-    void setAuthor() {
+    void setAuthorId() {
     }
 
     @Test
-    void isAvailability() {
+    void getAvailability() {
     }
 
     @Test
     void setAvailability() {
-    }
-
-    @Test
-    void testToString1() {
-    }
-
-    @Test
-    void testToString2() {
     }
 
     @Test
@@ -63,6 +68,6 @@ class CDTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

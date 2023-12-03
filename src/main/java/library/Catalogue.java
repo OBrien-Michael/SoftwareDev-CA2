@@ -1,12 +1,13 @@
 package library;
 
+import library.abstracts.LibraryItem;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.File;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -629,7 +630,7 @@ public class Catalogue {
 
     public void loadCatalogue() {
 
-        
+
             //Loading Library Users
             if(libraryUserFile.isFile()){
                 try (Reader libraryUserReader = Files.newBufferedReader(libraryUserFile.toPath());
@@ -869,7 +870,14 @@ public class Catalogue {
     }
 
 
-
+    public LibraryItem searchByLibraryItemId(int libraryItemId) {
+        for (LibraryItem libraryItem : libraryItemLinkedList) {
+            if (libraryItem.getLibraryItemId() == libraryItemId) {
+                return libraryItem; // Return the matching item
+            }
+        }
+        return null; // Return null if no match is found
+    }
 
 
 

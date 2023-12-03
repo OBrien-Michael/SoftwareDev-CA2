@@ -1,8 +1,8 @@
-package library;
+package library.abstracts;
 
 import java.time.LocalDate;
 
-public abstract class ResearchItem extends LibraryItem{
+public abstract class ResearchItem extends LibraryItem {
 
     private String topic;
     private String abstractText;

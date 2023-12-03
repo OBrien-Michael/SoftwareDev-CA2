@@ -1,4 +1,4 @@
-package library;
+package library.abstracts;
 
 public abstract class MediaItem extends LibraryItem{
 

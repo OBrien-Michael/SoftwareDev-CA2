@@ -23,11 +23,11 @@ class AuthorTest {
     }
 
     @Test
-    void getAuthoredBooks() {
+    void getAuthoredItems() {
     }
 
     @Test
-    void setAuthoredBooks() {
+    void setAuthoredItems() {
     }
 
     @Test
@@ -47,6 +47,6 @@ class AuthorTest {
     }
 
     @Test
-    void saveToCSVFile() {
+    void convertToCommaDelimitedArray() {
     }
 }

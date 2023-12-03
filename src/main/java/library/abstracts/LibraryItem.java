@@ -1,6 +1,9 @@
-package library;
+package library.abstracts;
 
-public abstract class LibraryItem implements Printable,Saveable,Comparable<LibraryItem>{
+import library.interfaces.Printable;
+import library.interfaces.Saveable;
+
+public abstract class LibraryItem implements Printable, Saveable,Comparable<LibraryItem>{
 
     private int libraryItemId;
     private String title;

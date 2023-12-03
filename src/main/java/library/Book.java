@@ -1,8 +1,11 @@
 package library;
 
+import library.abstracts.LibraryItem;
+import library.abstracts.LiteratureItem;
+
 import java.util.ArrayList;
 
-public class Book extends LiteratureItem{
+public class Book extends LiteratureItem {
 
     public Book() {
     }

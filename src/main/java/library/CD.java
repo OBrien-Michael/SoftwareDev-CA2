@@ -1,5 +1,8 @@
 package library;
 
+import library.abstracts.LibraryItem;
+import library.abstracts.MediaItem;
+
 import java.util.ArrayList;
 
 public class CD extends MediaItem {
