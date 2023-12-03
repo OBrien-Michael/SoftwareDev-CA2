@@ -5,6 +5,7 @@ import library.exceptions.AuthorException;
 import library.exceptions.LibraryItemException;
 import library.exceptions.LibraryUserException;
 import library.exceptions.LoanException;
+import library.lambdas.LibraryUserFinder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -341,8 +342,10 @@ public class Catalogue {
     //Create a new loan with ids
     public void createNewLoanById(int libraryUserId, int libraryItemId) {
         try {
+
+            LibraryUser libraryUser = findLibraryUserById(libraryItemId);
             //Check to see if User exists
-            for (LibraryUser libraryUser : libraryUserLinkedList) {
+            if(findLibraryUserById(libraryItemId) != null){
                 if (libraryUser.getLibraryUserId() == libraryUserId) {
 
                     //Check to see if Library Item exists
@@ -373,6 +376,9 @@ public class Catalogue {
                         }
                     }
                 }
+            }
+            else{
+                System.out.println("Library user does not exist");
             }
         } catch (LoanException loanException) {
             System.out.println(loanException.getLoanExceptionMessage());
@@ -1010,7 +1016,28 @@ public class Catalogue {
         } else {
             System.out.println("No Loans to save to file.");
         }
-
-
     }
+
+    //Lambda expressions using functional interfaces
+
+    //Find a library user by the id, return null if no user is found.
+    private LibraryUserFinder libraryUserFinder = (libraryUserLinkedList, libraryUserId) -> {
+        for (LibraryUser libraryUser : libraryUserLinkedList) {
+            if (libraryUser.getLibraryUserId() == libraryUserId) {
+                return libraryUser;
+            }
+        }
+        return null; // Return null if no match is found
+    };
+
+    // Method to use the lambda expression
+    public LibraryUser findLibraryUserById(int libraryUserId) {
+        return libraryUserFinder.findLibraryUserById(this.getLibraryUserLinkedList(), libraryUserId);
+    }
+
+
+
+
+
+
 }
