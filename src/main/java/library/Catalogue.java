@@ -894,7 +894,7 @@ public class Catalogue {
                     String dissertationTopic = dissertationRecord.get(3);
                     String dissertationAbstract = dissertationRecord.get(4);
                     LocalDate dissertationDatePublished = LocalDate.parse(dissertationRecord.get(5));
-                    boolean dissertationAvailability = Boolean.parseBoolean(dissertationRecord.get(4));
+                    boolean dissertationAvailability = Boolean.parseBoolean(dissertationRecord.get(6));
 
                     // Create a new Dissertation object and add it to the library item list
                     Dissertation loadDissertation = new Dissertation(libraryItemId, dissertationTitle, authorId, dissertationAvailability, dissertationTopic, dissertationAbstract, dissertationDatePublished);
